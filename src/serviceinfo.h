@@ -1,0 +1,4 @@
+#ifndef SERVICEINFO_H
+#define SERVICEINFO_H
+
+#endif // SERVICEINFO_H
