@@ -1,8 +1,12 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import QtQuick.LocalStorage 2.0
+import harbour.koronako.koronascan 1.0
+import "./databases.js" as Mydb
 
 Page {
     id: page
+
 
     // The effective value will be restricted by ApplicationWindow.allowedOrientations
     allowedOrientations: Orientation.All
@@ -14,9 +18,13 @@ Page {
         // PullDownMenu and PushUpMenu must be declared in SilicaFlickable, SilicaListView or SilicaGridView
         PullDownMenu {
             MenuItem {
-                text: qsTr("Show Page 2")
-                onClicked: pageStack.push(Qt.resolvedUrl("SecondPage.qml"))
+                text: qsTr("Show device page")
+                onClicked: pageStack.push(Qt.resolvedUrl("DevicePage.qml"))
             }
+            /*MenuItem {
+                text: qsTr("DeviceDiscovery")
+                onClicked: koronaScan.startScan();
+            }*/
         }
 
         // Tell SilicaFlickable the height of its content.
@@ -30,14 +38,77 @@ Page {
             width: page.width
             spacing: Theme.paddingLarge
             PageHeader {
-                title: qsTr("UI Template")
+                title: qsTr("Main page")
             }
             Label {
+                id: devicesSeen
                 x: Theme.horizontalPageMargin
-                text: qsTr("Hello Sailors")
+                text: qsTr("Devices seen today") + ": " + koronaList.get(0).devices
                 color: Theme.secondaryHighlightColor
                 font.pixelSize: Theme.fontSizeExtraLarge
             }
+
+            Label {
+                id: exposuresMet
+                x: Theme.horizontalPageMargin
+                text: qsTr("Device exposures today") + ": " + koronaList.get(0).exposures
+                color: Theme.secondaryHighlightColor
+                font.pixelSize: Theme.fontSizeExtraLarge
+            }
+
         }
+    }
+
+    Timer{
+        //interval: 120000
+        interval: 30000 //for testing
+        running: true
+        repeat: true
+        onTriggered: {
+            Mydb.findHits(current_day());
+            koronaScan.startScan();
+            //devicesSeen.text = qsTr("Devices seen today") + ": " + koronaList.get(0).devices
+        }
+    }
+
+    /*Timer{
+        interval: 70000
+        running: true
+        repeat: true
+        onTriggered: Mydb.findHits();
+    }*/
+
+    ListModel {
+        id: koronaList
+        ListElement {
+            day:"today"
+            devices: 0
+            exposures: 0
+        }
+    }
+
+    Koronascan {
+        id:koronaScan
+        onBtDeviceChanged:{
+            //console.log(current_day(),btDevice, btDevice.substring(0, 2))
+            Mydb.addHits(btDevice, btDevice.substring(0, 2))
+        }
+    }
+
+    property string current_date
+
+    function current_day() {
+
+        var d = new Date();
+        var n = d.getDate()
+        if (n < 10) {n = "0"+n}
+        current_date = n
+        return current_date
+    }
+
+    Component.onCompleted: {
+        var d = new Date()
+        //console.log(current_day())
+        Mydb.findHits(current_day());
     }
 }

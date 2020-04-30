@@ -3,6 +3,10 @@
 #endif
 
 #include <sailfishapp.h>
+#include <QtQml>
+
+#include "device.h"
+
 
 int main(int argc, char *argv[])
 {
@@ -15,6 +19,7 @@ int main(int argc, char *argv[])
     //   - SailfishApp::pathToMainQml() to get a QUrl to the main QML file
     //
     // To display the view, call "show()" (will show fullscreen on device).
+    qmlRegisterType<Device>("harbour.koronako.koronascan", 1, 0, "Koronascan");
 
     return SailfishApp::main(argc, argv);
 }

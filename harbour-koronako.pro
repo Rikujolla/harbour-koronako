@@ -14,14 +14,22 @@ TARGET = harbour-koronako
 
 CONFIG += sailfishapp
 
-SOURCES += src/harbour-koronako.cpp
+QT += bluetooth
+
+SOURCES += src/harbour-koronako.cpp \
+    src/characteristicinfo.cpp \
+    src/device.cpp \
+    src/deviceinfo.cpp \
+    src/service.cpp \
+    src/serviceinfo.cpp
 
 DISTFILES += qml/harbour-koronako.qml \
     qml/cover/CoverPage.qml \
-    qml/pages/FirstPage.qml \
-    qml/pages/SecondPage.qml \
-    rpm/harbour-koronako.changes.in \
-    rpm/harbour-koronako.changes.run.in \
+    qml/pages/DevicePage.qml \
+    qml/pages/MainPage.qml \
+    qml/pages/databases.js \
+    rpm/harbour-koronako.changes \
+    rpm/harbour-koronako.changes.run \
     rpm/harbour-koronako.spec \
     rpm/harbour-koronako.yaml \
     translations/*.ts \
@@ -38,3 +46,10 @@ CONFIG += sailfishapp_i18n
 # following TRANSLATIONS line. And also do not forget to
 # modify the localized app name in the the .desktop file.
 TRANSLATIONS += translations/harbour-koronako-de.ts
+
+HEADERS += \
+    src/characteristicinfo.h \
+    src/device.h \
+    src/deviceinfo.h \
+    src/service.h \
+    src/serviceinfo.h

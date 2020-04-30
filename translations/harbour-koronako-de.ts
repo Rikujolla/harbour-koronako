@@ -1,37 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0">
+<TS version="2.1">
 <context>
     <name>CoverPage</name>
     <message>
-        <source>My Cover</source>
-        <translation>Mein Cover</translation>
+        <source>Koronako</source>
+        <extracomment>App name is originally in Finnish &quot;Koronako&quot; which is like question &quot;Corona?&quot; or &quot;Is it corona?&quot; Feel free to translate.</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>FirstPage</name>
+    <name>DevicePage</name>
     <message>
-        <source>Show Page 2</source>
-        <translation>Zur Seite 2</translation>
+        <source>DeviceDiscovery</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>UI Template</source>
-        <translation>UI-Vorlage</translation>
-    </message>
-    <message>
-        <source>Hello Sailors</source>
-        <translation>Hallo Matrosen</translation>
+        <source>Devicelist</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>SecondPage</name>
+    <name>MainPage</name>
     <message>
-        <source>Nested Page</source>
-        <translation>Unterseite</translation>
+        <source>Show device page</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Item</source>
-        <translation>Element</translation>
+        <source>Main page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Devices seen today</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Corona exposures today</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>databases</name>
+    <message>
+        <source>Devices seen today</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Corona exposures today</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

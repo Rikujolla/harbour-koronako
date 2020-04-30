@@ -11,8 +11,11 @@
 
 # * date Author's Name <author's email> version-release
 # - Summary of changes
+* Thu Apr 30 2020 Riku Lahtinen <rikul.lajolla@kiu.as> 0.0.2-1
+- Device scanning info determined
+- Database structure determined
 
-* Sun Apr 13 2014 Jack Tar <jack.tar@example.com> 0.0.1-1
-- Scrubbed the deck
-- Hoisted the sails
+* Mon Apr 20 2020 Riku Lahtinen <rikul.lajolla@kiu.as> 0.0.1-1
+- First software only release, able to scan other devices
+- Based on Bluetooth Scanner example in qt
 

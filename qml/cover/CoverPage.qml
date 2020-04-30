@@ -5,7 +5,8 @@ CoverBackground {
     Label {
         id: label
         anchors.centerIn: parent
-        text: qsTr("My Cover")
+        //: App name is originally in Finnish "Koronako" which is like question "Corona?" or "Is it corona?" Feel free to translate.
+        text: qsTr("Koronako")
     }
 
     CoverActionList {
