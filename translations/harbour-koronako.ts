@@ -2,6 +2,82 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
+    <name>About</name>
+    <message>
+        <source>About page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Idea</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Translations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Finnish (Riku Lahtinen)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contributions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>App icon (Riku Lahtinen)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Licence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Licensed under BSD. License, source code and more information:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Koronako, version</source>
+        <extracomment>The name of the app followed with a version number</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Privacy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paired devices are not saved to database. The major privacy concern is the requirement to have bluetooth on revealing your device to others.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The idea of the software is to scan devices with bluetooth to help determine possible coronavirus exposures.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> In addition of the app a proper server application should be developed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The basic idea to maintain your and others privacy is a symmetric bluetooth address mix of the devices.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> Because only part of the address is used false alarms are possible occasionally.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Only mixed bluetooth address and a month day number is saved to the database preventing data hacking later.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> Nor more than one month data can be saved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (c) 2020, Riku Lahtinen</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CoverPage</name>
     <message>
         <source>Koronako</source>
@@ -10,22 +86,7 @@
     </message>
 </context>
 <context>
-    <name>DevicePage</name>
-    <message>
-        <source>DeviceDiscovery</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Devicelist</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>MainPage</name>
-    <message>
-        <source>Show device page</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Main page</source>
         <translation type="unfinished"></translation>
@@ -35,7 +96,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Corona exposures today</source>
+        <source>Device exposures today</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -46,7 +111,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Corona exposures today</source>
+        <source>Device exposures today</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -17,15 +17,11 @@ CONFIG += sailfishapp
 QT += bluetooth
 
 SOURCES += src/harbour-koronako.cpp \
-    src/characteristicinfo.cpp \
-    src/device.cpp \
-    src/deviceinfo.cpp \
-    src/service.cpp \
-    src/serviceinfo.cpp
+    src/device.cpp
 
 DISTFILES += qml/harbour-koronako.qml \
     qml/cover/CoverPage.qml \
-    qml/pages/DevicePage.qml \
+    qml/pages/About.qml \
     qml/pages/MainPage.qml \
     qml/pages/databases.js \
     rpm/harbour-koronako.changes \
@@ -35,7 +31,7 @@ DISTFILES += qml/harbour-koronako.qml \
     translations/*.ts \
     harbour-koronako.desktop
 
-SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
+SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172 256x256
 
 # to disable building translations every time, comment out the
 # following CONFIG line
@@ -45,11 +41,7 @@ CONFIG += sailfishapp_i18n
 # planning to localize your app, remember to comment out the
 # following TRANSLATIONS line. And also do not forget to
 # modify the localized app name in the the .desktop file.
-TRANSLATIONS += translations/harbour-koronako-de.ts
-
+TRANSLATIONS += translations/harbour-koronako-de.ts \
+                translations/harbour-koronako-fi.ts
 HEADERS += \
-    src/characteristicinfo.h \
-    src/device.h \
-    src/deviceinfo.h \
-    src/service.h \
-    src/serviceinfo.h
+    src/device.h

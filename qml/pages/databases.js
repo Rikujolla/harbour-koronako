@@ -42,7 +42,7 @@ function findHits(_day) {
                     // Set new result to the list model
                     else if (rs.rows.length > 0) {
                         koronaList.set(0,{"devices": rs.rows.item(0).cdevicepair})
-                    console.log("devices",rs.rows.item(0).cdevicepair)
+                        //console.log("devices",rs.rows.item(0).cdevicepair)
                     }
                     // If no search results do nothing
                     else {}
@@ -55,7 +55,7 @@ function findHits(_day) {
                     // Set new result to the list model
                     else if (rs.rows.length > 0) {
                         koronaList.set(0,{"exposures": rs.rows.item(0).cdevicepair})
-                    console.log("exposures",rs.rows.item(0).cdevicepair)
+                        //console.log("exposures",rs.rows.item(0).cdevicepair)
                     }
                     // If no search results do nothing
                     else {}

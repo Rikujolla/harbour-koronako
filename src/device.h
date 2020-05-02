@@ -1,5 +1,6 @@
 /****************************************************************************
 **
+/*Copyright (c) 2020, Riku Lahtinen
 ** Copyright (C) 2015 The Qt Company Ltd.
 ** Contact: http://www.qt.io/licensing/
 **
@@ -52,10 +53,6 @@
 #include <QBluetoothDeviceDiscoveryAgent>
 #include <QLowEnergyController>
 #include <QBluetoothServiceInfo>
-#include "deviceinfo.h"
-#include "serviceinfo.h"
-#include "characteristicinfo.h"
-
 
 QT_FORWARD_DECLARE_CLASS(QBluetoothDeviceDiscoveryAgent)
 QT_FORWARD_DECLARE_CLASS(QBluetoothDeviceInfo)
@@ -73,14 +70,10 @@ public:
     Device(QObject *parent = 0);
     ~Device();
     Q_INVOKABLE void startScan();
-    Q_INVOKABLE void itemActivated(QString item);
-    Q_INVOKABLE void changeOwnDeviceName();
-    Q_INVOKABLE void setServices();
-    //QVariantList bluetoothDeviceList() {return m_bluetoothDeviceList;}
     QString btDevice(){return myBtDevice;}
     void setBtDevice(QString tee1){
-      myBtDevice = tee1;
-      btDeviceChanged(myBtDevice);
+        myBtDevice = tee1;
+        btDeviceChanged(myBtDevice);
     }
 signals:
     void btDeviceChanged(QString tee1);
@@ -89,23 +82,14 @@ public slots:
     void addDevice(const QBluetoothDeviceInfo&);
     void on_power_clicked(bool clicked);
     void on_discoverable_clicked(bool clicked);
-    //void displayPairingMenu(const QPoint &pos);
-    //void pairingDone(const QBluetoothAddress&, QBluetoothLocalDevice::Pairing);
 private slots:
-    //void startScan();
     void scanFinished();
     void setGeneralUnlimited(bool unlimited);
-    //void itemActivated(QString item);
     void hostModeStateChanged(QBluetoothLocalDevice::HostMode);
-
 private:
     QBluetoothDeviceDiscoveryAgent *discoveryAgent;
     QBluetoothLocalDevice *localDevice;
-    //    Ui_DeviceDiscovery *ui;
-     QVariantList m_bluetoothDeviceList;
-     QString myBtDevice;
-     QBluetoothServiceInfo *btService3;
-
+    QString myBtDevice;
 };
 
 #endif
