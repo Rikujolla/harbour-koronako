@@ -9,7 +9,7 @@ Name:       harbour-koronako
 # << macros
 
 Summary:    Sailfish App to understand how corona could be tracked with an app
-Version:    0.0.3
+Version:    0.0.4
 Release:    1
 Group:      Qt/Qt
 License:    LICENSE

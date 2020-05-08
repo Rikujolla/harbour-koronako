@@ -34,7 +34,7 @@ Page {
         // of the page, followed by our content.
         Column {
             id: column
-
+            property bool poweri : false
             width: page.width
             spacing: Theme.paddingLarge
             PageHeader {
@@ -56,17 +56,37 @@ Page {
                 font.pixelSize: Theme.fontSizeExtraLarge
             }
 
+            Button {
+                id:power
+                text:"Clear today"
+                onClicked: {
+                    Mydb.deleteOldData(current_day())
+                    //koronaScan.on_power_clicked(column.poweri);
+                    //!column.poweri
+                }
+            }
+
+            Button {
+                id:sendMyKorona
+                text:"Send my korona"
+                onClicked: {
+                    //Mydb.deleteOldData(current_day())
+                    //koronaScan.on_power_clicked(column.poweri);
+                    //!column.poweri
+                }
+            }
+
         }
     }
 
     Timer{
         //interval: 120000
-        interval: 30000 //for testing
+        interval: 20000 //for testing
         running: true
         repeat: true
         onTriggered: {
             Mydb.findHits(current_day());
-            koronaScan.startScan();
+            //koronaScan.startScan();
             //devicesSeen.text = qsTr("Devices seen today") + ": " + koronaList.get(0).devices
         }
     }

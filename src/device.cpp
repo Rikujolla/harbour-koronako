@@ -58,14 +58,19 @@ Device::Device(QObject *parent)
     // devicename can be changed devel-su hciconfig hci0 name newname
     discoveryAgent = new QBluetoothDeviceDiscoveryAgent();
 
-    connect(discoveryAgent, SIGNAL(deviceDiscovered(QBluetoothDeviceInfo)),
-            this, SLOT(addDevice(QBluetoothDeviceInfo)));
+    //connect(discoveryAgent, SIGNAL(deviceDiscovered(QBluetoothDeviceInfo)),
+    //        this, SLOT(addDevice(QBluetoothDeviceInfo)));
     connect(discoveryAgent, SIGNAL(finished()), this, SLOT(scanFinished()));
 
     connect(localDevice, SIGNAL(hostModeStateChanged(QBluetoothLocalDevice::HostMode)),
             this, SLOT(hostModeStateChanged(QBluetoothLocalDevice::HostMode)));
 
     hostModeStateChanged(localDevice->hostMode());
+
+    timer.connect(&timer, SIGNAL(timeout()), this, SLOT(startScan()));
+    timer.setSingleShot(false);
+    timer.start(60000);
+
 }
 
 Device::~Device()
@@ -75,27 +80,26 @@ Device::~Device()
 
 void Device::addDevice(const QBluetoothDeviceInfo &info)
 {
-    QString label = QString("%1 %2").arg(info.address().toString()).arg(info.name());
-    //QString mybt = localDevice->address().toString();
+    /*QString label = QString("%1 %2").arg(info.address().toString()).arg(info.name());
     QString mybt;
     uint mybtint;
-    //QString yourbt = QString("%1").arg(info.address().toString());
     QString yourbt;
     uint yourbtint;
     QString sumbt = QDateTime::currentDateTime().toString("dd") +":";
     uint sumbtint;
-    // https://www.cplusplus.com/reference/ctime/tm/
-    //time_t now = time(0);
-    //tm *ltm = localtime(&now);
-    QString sumbttotal = QDateTime::currentDateTime().toString("dd");
-    //QList<QString *> items;
-    //if (items.empty()) {
-    QBluetoothLocalDevice::Pairing pairingStatus = localDevice->pairingStatus(info.address());
-    if (pairingStatus == QBluetoothLocalDevice::Unpaired )
+    QString sumbttotal = QDateTime::currentDateTime().toString("dd");*/
+    /* Code seems not work properly when discovery is not finished
+    if (info.majorDeviceClass() == QBluetoothDeviceInfo::PhoneDevice) {
+        //Unpaired device is not telling major device class
+        qDebug() << "Phone " << label << info.rssi() << info.isCached()<< info.deviceUuid().toString();
+    }
+    else {
+        qDebug() << "Other " << label<< info.rssi()<< info.isCached() << info.deviceUuid().toString();
+    }
+    */
+    /*QBluetoothLocalDevice::Pairing pairingStatus = localDevice->pairingStatus(info.address());
+    if (pairingStatus == QBluetoothLocalDevice::Unpaired)
         // if (pairingStatus == QBluetoothLocalDevice::Paired || pairingStatus == QBluetoothLocalDevice::AuthorizedPaired )
-        //myBtDevice = label;
-        //qDebug() << "Paired " << label ;
-        //btDeviceChanged(myBtDevice);
     {
         //qDebug() << "Unpaired " << localDevice->address() << info.address() ;
         for ( int i =3 ; i < 16; i = i + 3 ) {
@@ -108,17 +112,17 @@ void Device::addDevice(const QBluetoothDeviceInfo &info)
             sumbtint = mybtint + yourbtint;
             // https://doc.qt.io/qt-5/qstring.html#arg
             // https://forum.qt.io/topic/28890/convert-from-int-to-hex/8
-            QString sumbt = QString("%1").arg(sumbtint, 2, 16, QLatin1Char( '0' ));
+            sumbt = QString("%1").arg(sumbtint, 2, 16, QLatin1Char( '0' ));
             sumbttotal = sumbttotal + ":" + sumbt ;
             //qDebug() << mybtint << yourbtint << sumbtint << sumbttotal;
         }
 
-        qDebug() << "Unpaired mixed" << sumbttotal;
+        qDebug() << "Unpaired mixed" << sumbttotal << "Phone " << label;
+        ;
         myBtDevice = sumbttotal;
         btDeviceChanged(myBtDevice);
         //emit btDeviceChanged; //Have to study later if signal could be coded more simple way
-    }
-
+    }*/
 }
 
 void Device::startScan()
@@ -128,7 +132,41 @@ void Device::startScan()
 
 void Device::scanFinished()
 {
-    qDebug() << "Finished" ;
+    qDebug() << "Finished" << discoveryAgent->discoveredDevices().count() ;
+    for (int i=0 ; i < discoveryAgent->discoveredDevices().count();i++){
+        if (discoveryAgent->discoveredDevices().at(i).majorDeviceClass() == QBluetoothDeviceInfo::PhoneDevice){
+            if (discoveryAgent->discoveredDevices().at(i).rssi() < 0 && discoveryAgent->discoveredDevices().at(i).rssi() > -70){qDebug() << "Phone_small";}
+            QString mybt;
+            uint mybtint;
+            QString yourbt;
+            uint yourbtint;
+            QString sumbt = QDateTime::currentDateTime().toString("dd") +":";
+            uint sumbtint;
+            QString sumbttotal = QDateTime::currentDateTime().toString("dd");
+            QBluetoothLocalDevice::Pairing pairingStatus = localDevice->pairingStatus(discoveryAgent->discoveredDevices().at(i).address());
+            if (pairingStatus == QBluetoothLocalDevice::Unpaired)
+            {
+                for ( int j =3 ; j < 16; j = j + 3 ) {
+                    mybt = localDevice->address().toString().mid(j,1);
+                    // https://forum.qt.io/topic/31737/solved-convert-ascii-hex-to-int
+                    bool bStatus = false;
+                    mybtint = mybt.toUInt(&bStatus,16);
+                    yourbt = QString("%1").arg(discoveryAgent->discoveredDevices().at(i).address().toString()).mid(j,1);
+                    yourbtint = yourbt.toUInt(&bStatus,16);
+                    sumbtint = mybtint + yourbtint;
+                    // https://doc.qt.io/qt-5/qstring.html#arg
+                    // https://forum.qt.io/topic/28890/convert-from-int-to-hex/8
+                    sumbt = QString("%1").arg(sumbtint, 2, 16, QLatin1Char( '0' ));
+                    sumbttotal = sumbttotal + ":" + sumbt ;
+                }
+
+                qDebug() << "Phone" << discoveryAgent->discoveredDevices().at(i).address() << discoveryAgent->discoveredDevices().at(i).rssi() << sumbttotal;
+                myBtDevice = sumbttotal;
+                btDeviceChanged(myBtDevice);
+            }
+
+        }
+    }
 }
 
 void Device::setGeneralUnlimited(bool unlimited)
@@ -147,21 +185,12 @@ void Device::on_discoverable_clicked(bool clicked)
         localDevice->setHostMode(QBluetoothLocalDevice::HostConnectable);
 }
 
-void Device::on_power_clicked(bool clicked)
-{
-    if (clicked)
-        localDevice->powerOn();
-    else
-        localDevice->setHostMode(QBluetoothLocalDevice::HostPoweredOff);
-}
-
 void Device::hostModeStateChanged(QBluetoothLocalDevice::HostMode mode)
 {
     if (mode != QBluetoothLocalDevice::HostPoweredOff)
-        //ui->power->setChecked(true)
         ;
     else
-        //ui->power->setChecked( false);
+        //timer.stop();
 
         if (mode == QBluetoothLocalDevice::HostDiscoverable)
             //ui->discoverable->setChecked(true)

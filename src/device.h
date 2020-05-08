@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-/*Copyright (c) 2020, Riku Lahtinen
+**Copyright (c) 2020, Riku Lahtinen
 ** Copyright (C) 2015 The Qt Company Ltd.
 ** Contact: http://www.qt.io/licensing/
 **
@@ -53,6 +53,7 @@
 #include <QBluetoothDeviceDiscoveryAgent>
 #include <QLowEnergyController>
 #include <QBluetoothServiceInfo>
+#include <QTimer>
 
 QT_FORWARD_DECLARE_CLASS(QBluetoothDeviceDiscoveryAgent)
 QT_FORWARD_DECLARE_CLASS(QBluetoothDeviceInfo)
@@ -80,7 +81,6 @@ signals:
 
 public slots:
     void addDevice(const QBluetoothDeviceInfo&);
-    void on_power_clicked(bool clicked);
     void on_discoverable_clicked(bool clicked);
 private slots:
     void scanFinished();
@@ -90,6 +90,7 @@ private:
     QBluetoothDeviceDiscoveryAgent *discoveryAgent;
     QBluetoothLocalDevice *localDevice;
     QString myBtDevice;
+    QTimer timer;
 };
 
 #endif

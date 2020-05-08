@@ -49,7 +49,7 @@ function findHits(_day) {
 
                     // Check deviices with more than 7 hits
                     //rs = tx.executeSql('SELECT day, count(devicepair) AS cdevicepair FROM Exposures WHERE day = ? GROUP BY day HAVING cdevicepair > ?', [_day, 7]);
-                    rs = tx.executeSql('SELECT count(devicepair) AS cdevicepair FROM Exposures WHERE day = ? AND hits > ?', [_day, 7]);
+                    rs = tx.executeSql('SELECT count(devicepair) AS cdevicepair FROM Exposures WHERE day = ? AND hits > ?', [_day, 15]);
                     // If multiple results, something went wrong
                     if (rs.rows.length > 1){console.log("error 1")}
                     // Set new result to the list model
@@ -62,6 +62,24 @@ function findHits(_day) {
 
                     devicesSeen.text = qsTr("Devices seen today") + ": " + koronaList.get(0).devices
                     exposuresMet.text = qsTr("Device exposures today") + ": " + koronaList.get(0).exposures
+                }
+                )
+
+}
+
+// Function deletes old data
+function deleteOldData(_day) {
+
+    var db = LocalStorage.openDatabaseSync("KoronakoDB", "1.0", "Koronako database", 1000000);
+
+    db.transaction(
+                function(tx) {
+                    // Create the table, if not existing
+                    tx.executeSql('CREATE TABLE IF NOT EXISTS Exposures(devicepair TEXT, day TEXT, hits INTEGER)');
+
+                    // Delete
+                    tx.executeSql('DELETE FROM Exposures WHERE substr(devicepair,1,2) = ?', ["06"]);
+
                 }
                 )
 
