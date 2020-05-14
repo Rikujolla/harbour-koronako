@@ -69,7 +69,7 @@ Device::Device(QObject *parent)
 
     timer.connect(&timer, SIGNAL(timeout()), this, SLOT(startScan()));
     timer.setSingleShot(false);
-    timer.start(60000);
+    timer.start(dTimer);
 
 }
 

@@ -17,6 +17,7 @@ CONFIG += sailfishapp
 QT += bluetooth
 
 SOURCES += src/harbour-koronako.cpp \
+    src/client.cpp \
     src/device.cpp
 
 DISTFILES += qml/harbour-koronako.qml \
@@ -44,4 +45,5 @@ CONFIG += sailfishapp_i18n
 TRANSLATIONS += translations/harbour-koronako-de.ts \
                 translations/harbour-koronako-fi.ts
 HEADERS += \
+    src/client.h \
     src/device.h

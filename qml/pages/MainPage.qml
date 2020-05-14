@@ -2,6 +2,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import QtQuick.LocalStorage 2.0
 import harbour.koronako.koronascan 1.0
+import harbour.koronako.koronaclient 1.0
 import "./databases.js" as Mydb
 
 Page {
@@ -40,7 +41,99 @@ Page {
             PageHeader {
                 title: qsTr("Main page")
             }
-            Label {
+
+            SectionHeader { text: qsTr("Exposures") }
+            Text {
+                id: exposuresText
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.primaryColor
+                wrapMode: Text.WordWrap
+                width: parent.width
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    margins: Theme.paddingLarge
+                }
+                text: ""
+            }
+
+            SectionHeader { text: qsTr("Korona exposures") }
+            Text {
+                id: koronaExposuresText
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.primaryColor
+                wrapMode: Text.WordWrap
+                width: parent.width
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    margins: Theme.paddingLarge
+                }
+                text: ""
+            }
+
+            Button {
+                id:sendMyKorona
+                text:"Check korona exposures"
+                onClicked: {
+                    Mydb.checkMyExposures()
+                    koronaClient.sport = 32653
+                    koronaClient.sipadd = "172.28.172.2"
+                    koronaClient.requestNewFortune()
+                    //Mydb.deleteOldData(current_day())
+                    //koronaScan.on_power_clicked(column.poweri);
+                    //!column.poweri
+                }
+            }
+            SectionHeader { text: qsTr("My korona") }
+            Text {
+                id: koronaDiseaseText
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.primaryColor
+                wrapMode: Text.WordWrap
+                width: parent.width
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    margins: Theme.paddingLarge
+                }
+                text: "My korona disease started 9.5.2020"
+            }
+            Row{
+                Button {
+                    id: koronaStart
+                    text: "Start date"
+
+                    onClicked: {
+                        var dialog = pageStack.push(pickerComponent, {
+                                                        date: new Date('2020/05/09')
+                                                    })
+                        dialog.accepted.connect(function() {
+                            koronaStart.text = "Start: " + dialog.dateText
+                        })
+                    }
+                }
+
+                Button {
+                    id: koronaEnd
+                    text: "End date"
+
+                    onClicked: {
+                        var dialog = pageStack.push(pickerComponent, {
+                                                        date: new Date('2020/05/09')
+                                                    })
+                        dialog.accepted.connect(function() {
+                            koronaEnd.text = "End: " + dialog.dateText
+                        })
+                    }
+                }
+            }
+            Component {
+                id: pickerComponent
+                DatePickerDialog {}
+            }
+
+            /*Label {
                 id: devicesSeen
                 x: Theme.horizontalPageMargin
                 text: qsTr("Devices seen today") + ": " + koronaList.get(0).devices
@@ -54,6 +147,10 @@ Page {
                 text: qsTr("Device exposures today") + ": " + koronaList.get(0).exposures
                 color: Theme.secondaryHighlightColor
                 font.pixelSize: Theme.fontSizeExtraLarge
+            }*/
+
+            Button {
+                text: "Send my disease data"
             }
 
             Button {
@@ -66,15 +163,7 @@ Page {
                 }
             }
 
-            Button {
-                id:sendMyKorona
-                text:"Send my korona"
-                onClicked: {
-                    //Mydb.deleteOldData(current_day())
-                    //koronaScan.on_power_clicked(column.poweri);
-                    //!column.poweri
-                }
-            }
+
 
         }
     }
@@ -115,6 +204,12 @@ Page {
         }
     }
 
+    Koronaclient {
+        id: koronaClient
+        onCmoveChanged: console.log(cmove, "test")
+    }
+
+
     property string current_date
 
     function current_day() {
@@ -127,8 +222,7 @@ Page {
     }
 
     Component.onCompleted: {
-        var d = new Date()
-        //console.log(current_day())
         Mydb.findHits(current_day());
+        koronaScan.ctime = discoveryTimer;
     }
 }

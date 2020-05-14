@@ -6,6 +6,7 @@
 #include <QtQml>
 
 #include "device.h"
+#include "client.h"
 
 
 int main(int argc, char *argv[])
@@ -20,6 +21,7 @@ int main(int argc, char *argv[])
     //
     // To display the view, call "show()" (will show fullscreen on device).
     qmlRegisterType<Device>("harbour.koronako.koronascan", 1, 0, "Koronascan");
+    qmlRegisterType<Client>("harbour.koronako.koronaclient", 1, 0, "Koronaclient");
 
     return SailfishApp::main(argc, argv);
 }

@@ -92,27 +92,35 @@
         <translation>Pääsivu</translation>
     </message>
     <message>
-        <source>Devices seen today</source>
-        <translation>Laitteita tänään</translation>
-    </message>
-    <message>
-        <source>Device exposures today</source>
-        <translation>Altistuneita laitteita tänään</translation>
-    </message>
-    <message>
         <source>About</source>
         <translation>Tietoja</translation>
+    </message>
+    <message>
+        <source>Exposures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Korona exposures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My korona</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>databases</name>
     <message>
-        <source>Devices seen today</source>
-        <translation>Laitteita tänään</translation>
+        <source>Korona app has detected today %1 phones close of your phone.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Device exposures today</source>
-        <translation>Altistuneita laitteita tänään</translation>
+        <source> Of those phones %1 have exceeded determined exposure time.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>By sending your exposure data to the server, you can check if somebody has exposured you to coronavirus</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

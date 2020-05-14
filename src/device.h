@@ -66,18 +66,26 @@ class Device : public QObject
 
     //Q_PROPERTY(QVariantList bluetoothDeviceList READ bluetoothDeviceList)
     Q_PROPERTY(QString btDevice READ btDevice WRITE setBtDevice NOTIFY btDeviceChanged)
+    Q_PROPERTY(int ctime READ ctime WRITE setCtime NOTIFY ctimeChanged) // DiscoveryTimer
 
 public:
     Device(QObject *parent = 0);
     ~Device();
     Q_INVOKABLE void startScan();
     QString btDevice(){return myBtDevice;}
-    void setBtDevice(QString tee1){
-        myBtDevice = tee1;
+    void setBtDevice(QString te11){
+        myBtDevice = te11;
         btDeviceChanged(myBtDevice);
     }
+    int ctime(){return dTimer;}
+    void setCtime(int te14){
+      dTimer = te14;
+      ctimeChanged(dTimer);
+    }
+
 signals:
-    void btDeviceChanged(QString tee1);
+    void btDeviceChanged(QString te11);
+    void ctimeChanged(int te14);
 
 public slots:
     void addDevice(const QBluetoothDeviceInfo&);
@@ -91,6 +99,7 @@ private:
     QBluetoothLocalDevice *localDevice;
     QString myBtDevice;
     QTimer timer;
+    int dTimer;
 };
 
 #endif
