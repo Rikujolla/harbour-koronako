@@ -130,7 +130,7 @@ void Client::startClient()
     }
 }
 
-void Client::requestNewFortune()
+void Client::exchangeDataWithServer()
 {
     int values = 1;
     while (values > 0) {

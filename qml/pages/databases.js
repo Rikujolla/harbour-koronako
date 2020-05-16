@@ -1,3 +1,80 @@
+function saveSettings() {
+
+    var db = LocalStorage.openDatabaseSync("KoronakoDB", "1.0", "Koronako database", 1000000);
+
+    db.transaction(
+                function(tx) {
+                    // Create the table, if not existing
+                    tx.executeSql('CREATE TABLE IF NOT EXISTS Settings(name TEXT, subname TEXT, valte TEXT, valre REAL, valint INTEGER)');
+
+                    // covidStartDate
+                    var rs = tx.executeSql('SELECT * FROM Settings WHERE name = ?', 'covidStartDate');
+                    if (rs.rows.length > 0) {tx.executeSql('UPDATE Settings SET valte=? WHERE name=?', [covidStartDate, 'covidStartDate'])}
+                    else {tx.executeSql('INSERT INTO Settings VALUES(?, ?, ?, ?, ?)', [ 'covidStartDate', '', covidStartDate, '', '' ])}
+                    // covidEndDate
+                    rs = tx.executeSql('SELECT * FROM Settings WHERE name = ?', 'covidEndDate');
+                    if (rs.rows.length > 0) {tx.executeSql('UPDATE Settings SET valte=? WHERE name=?', [covidEndDate, 'covidEndDate'])}
+                    else {tx.executeSql('INSERT INTO Settings VALUES(?, ?, ?, ?, ?)', [ 'covidEndDate', '', covidEndDate, '', '' ])}
+                    // minHits
+                    rs = tx.executeSql('SELECT * FROM Settings WHERE name = ?', 'minHits');
+                    if (rs.rows.length > 0) {tx.executeSql('UPDATE Settings SET valint=? WHERE name=?', [ minHits, 'minHits'])}
+                    else {tx.executeSql('INSERT INTO Settings VALUES(?, ?, ?, ?, ?)', [ 'minHits', '', '', '' , minHits])}
+                    // discoveryTimer
+                    rs = tx.executeSql('SELECT * FROM Settings WHERE name = ?', 'discoveryTimer');
+                    if (rs.rows.length > 0) {tx.executeSql('UPDATE Settings SET valint=? WHERE name=?', [ discoveryTimer, 'discoveryTimer'])}
+                    else {tx.executeSql('INSERT INTO Settings VALUES(?, ?, ?, ?, ?)', [ 'discoveryTimer', '', '', '' , discoveryTimer])}
+                    // serverAddress
+                    rs = tx.executeSql('SELECT * FROM Settings WHERE name = ?', 'serverAddress');
+                    if (rs.rows.length > 0) {tx.executeSql('UPDATE Settings SET valte=? WHERE name=?', [serverAddress, 'serverAddress'])}
+                    else {tx.executeSql('INSERT INTO Settings VALUES(?, ?, ?, ?, ?)', [ 'serverAddress', '', serverAddress, '', '' ])}
+                    // serverPort
+                    rs = tx.executeSql('SELECT * FROM Settings WHERE name = ?', 'serverPort');
+                    if (rs.rows.length > 0) {tx.executeSql('UPDATE Settings SET valint=? WHERE name=?', [ serverPort, 'serverPort'])}
+                    else {tx.executeSql('INSERT INTO Settings VALUES(?, ?, ?, ?, ?)', [ 'serverPort', '', '', '' , serverPort])}
+                }
+                )
+}
+
+function loadSettings() {
+
+    var db = LocalStorage.openDatabaseSync("KoronakoDB", "1.0", "Koronako database", 1000000);
+
+    db.transaction(
+                function(tx) {
+                    // Create the table, if not existing
+                    tx.executeSql('CREATE TABLE IF NOT EXISTS Settings(name TEXT, subname TEXT, valte TEXT, valre REAL, valint INTEGER)');
+
+                    // covidStartDate
+                    var rs = tx.executeSql('SELECT * FROM Settings WHERE name = ?', ['covidStartDate']);
+                    if (rs.rows.length > 0) {covidStartDate = rs.rows.item(0).valte}
+                    else {}
+                    // covidEndDate
+                    rs = tx.executeSql('SELECT * FROM Settings WHERE name = ?', ['covidEndDate']);
+                    if (rs.rows.length > 0) {covidEndDate = rs.rows.item(0).valte}
+                    else {}
+                    // minHits
+                    rs = tx.executeSql('SELECT * FROM Settings WHERE name = ?', ['minHits']);
+                    if (rs.rows.length > 0) {minHits = rs.rows.item(0).valint}
+                    else {}
+                    // discoveryTimer
+                    rs = tx.executeSql('SELECT * FROM Settings WHERE name = ?', ['discoveryTimer']);
+                    if (rs.rows.length > 0) {discoveryTimer = rs.rows.item(0).valint}
+                    else {}
+                    // serverAddress
+                    rs = tx.executeSql('SELECT * FROM Settings WHERE name = ?', ['serverAddress']);
+                    if (rs.rows.length > 0) {serverAddress = rs.rows.item(0).valte}
+                    else {}
+                    // minHits
+                    rs = tx.executeSql('SELECT * FROM Settings WHERE name = ?', ['minHits']);
+                    if (rs.rows.length > 0) {minHits = rs.rows.item(0).valint}
+                    else {}
+                    // serverPort
+                    rs = tx.executeSql('SELECT * FROM Settings WHERE name = ?', ['serverPort']);
+                    if (rs.rows.length > 0) {serverPort = rs.rows.item(0).valint}
+                    else {}
+                }
+                )
+}
 
 // Function adds hits to devices when devices scanned
 function addHits(_devicepair, _day) {
@@ -64,11 +141,10 @@ function findHits(_day) {
                     //exposuresMet.text = qsTr("Device exposures today") + ": " + koronaList.get(0).exposures
                     exposuresText.text = qsTr("Korona app has detected today %1 phones close of your phone.").arg(koronaList.get(0).devices)
                             + qsTr(" Of those phones %1 have exceeded determined exposure time.").arg(koronaList.get(0).exposures)
-                    koronaExposuresText.text = qsTr("By sending your exposure data to the server, you can check if somebody has exposured you to coronavirus")
+                    koronaExposuresText.text = qsTr("By sending your exposure data to the server, you can check if somebody has exposured you to coronavirus.")
 
                 }
                 )
-
 }
 
 // Function deletes old data from db
@@ -96,7 +172,6 @@ function deleteOldData(_day) {
                     }
                 }
                 )
-
 }
 
 function checkMyExposures() {
@@ -112,10 +187,9 @@ function checkMyExposures() {
                     var _exposurelist = ''
                     for (var i = 1; i<rs.rows.length;i++){
 
-                       _exposurelist = _exposurelist +  rs.rows.item(i).devicepair
+                        _exposurelist = _exposurelist +  rs.rows.item(i).devicepair
                     }
                     koronaClient.expdata = _exposurelist;
                 }
                 )
-
 }

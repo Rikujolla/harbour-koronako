@@ -11,6 +11,15 @@
 
 # * date Author's Name <author's email> version-release
 # - Summary of changes
+* Sat May 16 2020 Riku Lahtinen <rikul.lajolla@kiu.as> 0.0.6-1
+- Very basic functionality with simple tcpserver
+
+* Thu May 14 2020 Riku Lahtinen <rikul.lajolla@kiu.as> 0.0.5-1
+- Very basic functionality with simple tcpserver
+
+* Fri May 08 2020 Riku Lahtinen <rikul.lajolla@kiu.as> 0.0.4-1
+- Something more
+
 * Sat May 02 2020 Riku Lahtinen <rikul.lajolla@kiu.as> 0.0.3-1
 - App cleaned for a possible publishing
 

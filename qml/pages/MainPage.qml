@@ -12,27 +12,22 @@ Page {
     // The effective value will be restricted by ApplicationWindow.allowedOrientations
     allowedOrientations: Orientation.All
 
-    // To enable PullDownMenu, place our content in a SilicaFlickable
     SilicaFlickable {
         anchors.fill: parent
 
-        // PullDownMenu and PushUpMenu must be declared in SilicaFlickable, SilicaListView or SilicaGridView
         PullDownMenu {
             MenuItem {
                 text: qsTr("About")
                 onClicked: pageStack.push(Qt.resolvedUrl("About.qml"))
             }
-            /*MenuItem {
-                text: qsTr("DeviceDiscovery")
-                onClicked: koronaScan.startScan();
-            }*/
+            MenuItem {
+                text: qsTr("Settings")
+                onClicked: pageStack.push(Qt.resolvedUrl("Settings.qml"))
+            }
         }
 
-        // Tell SilicaFlickable the height of its content.
         contentHeight: column.height
 
-        // Place our content in a Column.  The PageHeader is always placed at the top
-        // of the page, followed by our content.
         Column {
             id: column
             property bool poweri : false
@@ -42,7 +37,7 @@ Page {
                 title: qsTr("Main page")
             }
 
-            SectionHeader { text: qsTr("Exposures") }
+            SectionHeader { text: qsTr("Device exposures") }
             Text {
                 id: exposuresText
                 font.pixelSize: Theme.fontSizeSmall
@@ -75,17 +70,15 @@ Page {
             Button {
                 id:sendMyKorona
                 text:"Check korona exposures"
+                anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: {
                     Mydb.checkMyExposures()
-                    koronaClient.sport = 32653
-                    koronaClient.sipadd = "172.28.172.2"
-                    koronaClient.requestNewFortune()
-                    //Mydb.deleteOldData(current_day())
-                    //koronaScan.on_power_clicked(column.poweri);
-                    //!column.poweri
+                    koronaClient.sport = serverPort
+                    koronaClient.sipadd = serverAddress
+                    koronaClient.exchangeDataWithServer()
                 }
             }
-            SectionHeader { text: qsTr("My korona") }
+            SectionHeader { text: qsTr("My korona disease") }
             Text {
                 id: koronaDiseaseText
                 font.pixelSize: Theme.fontSizeSmall
@@ -97,9 +90,11 @@ Page {
                     right: parent.right
                     margins: Theme.paddingLarge
                 }
-                text: "My korona disease started 9.5.2020"
+                text: qsTr("By sending my corona infection dates and exposure data to the server, I will help others to prevent of spreading the disease.")
             }
             Row{
+                anchors.horizontalCenter: parent.horizontalCenter
+
                 Button {
                     id: koronaStart
                     text: "Start date"
@@ -133,35 +128,14 @@ Page {
                 DatePickerDialog {}
             }
 
-            /*Label {
-                id: devicesSeen
-                x: Theme.horizontalPageMargin
-                text: qsTr("Devices seen today") + ": " + koronaList.get(0).devices
-                color: Theme.secondaryHighlightColor
-                font.pixelSize: Theme.fontSizeExtraLarge
-            }
-
-            Label {
-                id: exposuresMet
-                x: Theme.horizontalPageMargin
-                text: qsTr("Device exposures today") + ": " + koronaList.get(0).exposures
-                color: Theme.secondaryHighlightColor
-                font.pixelSize: Theme.fontSizeExtraLarge
-            }*/
-
             Button {
                 text: "Send my disease data"
-            }
-
-            Button {
-                id:power
-                text:"Clear today"
-                onClicked: {
-                    Mydb.deleteOldData(current_day())
-                    //koronaScan.on_power_clicked(column.poweri);
-                    //!column.poweri
+                anchors.horizontalCenter: parent.horizontalCenter
+                onClicked:{
+                    console.log("Sent data")
                 }
             }
+
 
 
 
@@ -224,5 +198,6 @@ Page {
     Component.onCompleted: {
         Mydb.findHits(current_day());
         koronaScan.ctime = discoveryTimer;
+        Mydb.deleteOldData(current_day())
     }
 }

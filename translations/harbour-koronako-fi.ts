@@ -96,15 +96,54 @@
         <translation>Tietoja</translation>
     </message>
     <message>
-        <source>Exposures</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Korona exposures</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>My korona</source>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Device exposures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My korona disease</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>By sending my corona infection dates and exposure data to the server, I will help others to prevent of spreading the disease.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Settings</name>
+    <message>
+        <source>Settings page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Server settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Insert here address info of your koronako-server</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IP address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Port number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Timer settings etc</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -119,7 +158,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>By sending your exposure data to the server, you can check if somebody has exposured you to coronavirus</source>
+        <source>By sending your exposure data to the server, you can check if somebody has exposured you to coronavirus.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -62,11 +62,10 @@ class QNetworkSession;
 class Client : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString sipadd READ sipadd WRITE setSipadd NOTIFY sipaddChanged)
-    Q_PROPERTY(int sport READ sport WRITE setSport NOTIFY sportChanged)
+    Q_PROPERTY(QString sipadd READ sipadd WRITE setSipadd NOTIFY sipaddChanged) //Server address
+    Q_PROPERTY(int sport READ sport WRITE setSport NOTIFY sportChanged) // Server port
     Q_PROPERTY(QString cmove READ cmove WRITE setCmove NOTIFY cmoveChanged) //opponents move
     Q_PROPERTY(int ctime READ ctime WRITE setCtime NOTIFY ctimeChanged) // to be removed
-    Q_PROPERTY(int cincrem READ cincrem WRITE setCincrem NOTIFY cincremChanged) // own increment value
     Q_PROPERTY(QString expdata READ expdata WRITE setExpdata NOTIFY expdataChanged)
 
 public:
@@ -92,17 +91,12 @@ public:
       oppTime = tee4;
       ctimeChanged(oppTime);
     }
-    int cincrem(){return oppIncrem;}
-    void setCincrem(int tee5){
-      oppIncrem = tee5;
-      cincremChanged(oppIncrem);
-    }
     QString expdata(){return myExpdata;}
     void setExpdata(QString tee6){
       myExpdata = tee6;
       expdataChanged(myExpdata);
     }
-    Q_INVOKABLE void requestNewFortune();
+    Q_INVOKABLE void exchangeDataWithServer();
     Q_INVOKABLE void startClient();
     QString getExposures();
 
@@ -129,9 +123,7 @@ private:
     int mySport;
     QString myCmove;
     int oppTime;
-    int oppIncrem;
     QString myExpdata;
-    quint16 blockSize;
 
 };
 

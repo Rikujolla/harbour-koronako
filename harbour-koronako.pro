@@ -24,6 +24,7 @@ DISTFILES += qml/harbour-koronako.qml \
     qml/cover/CoverPage.qml \
     qml/pages/About.qml \
     qml/pages/MainPage.qml \
+    qml/pages/Settings.qml \
     qml/pages/databases.js \
     rpm/harbour-koronako.changes \
     rpm/harbour-koronako.changes.run \
