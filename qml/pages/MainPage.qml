@@ -8,6 +8,13 @@ import "./databases.js" as Mydb
 Page {
     id: page
 
+    property var messages: [{mesg:""},
+        {mesg:qsTr("Not connected to server!")},
+        {mesg:qsTr("Exposured!")},
+        {mesg:qsTr("No exposure!")},
+        {mesg:qsTr("Sent corona data!")},
+        {mesg:qsTr("Error!")}
+    ]
 
     // The effective value will be restricted by ApplicationWindow.allowedOrientations
     allowedOrientations: Orientation.All
@@ -34,10 +41,36 @@ Page {
             width: page.width
             spacing: Theme.paddingLarge
             PageHeader {
-                title: qsTr("Main page")
+                title: qsTr("Today")
+            }
+            BackgroundItem {
+                SectionHeader { text: qsTr("Phones close of my phone: %1").arg(koronaList.get(0).devices) }
+                onClicked: {
+                    closeText.visible = !closeText.visible
+                    Mydb.saveSettings()
+                }
+            }
+            Text {
+                id: closeText
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.primaryColor
+                wrapMode: Text.WordWrap
+                width: parent.width
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    margins: Theme.paddingLarge
+                }
+                text: qsTr("Number of the phones the Koronako app has detected today close of your phone.")
             }
 
-            SectionHeader { text: qsTr("Device exposures") }
+            BackgroundItem {
+                SectionHeader { text: qsTr("Phone exposures: %1").arg(koronaList.get(0).exposures) }
+                onClicked: {
+                    exposuresText.visible = !exposuresText.visible
+                    Mydb.saveSettings()
+                }
+            }
             Text {
                 id: exposuresText
                 font.pixelSize: Theme.fontSizeSmall
@@ -49,12 +82,51 @@ Page {
                     right: parent.right
                     margins: Theme.paddingLarge
                 }
-                text: ""
+                text: qsTr("Number of the those phones that have exceeded determined exposure time.")
             }
 
-            SectionHeader { text: qsTr("Korona exposures") }
+            BackgroundItem {
+                SectionHeader {
+                    id:headDaysCorona
+                    text: qsTr("Days from last corona exposure: %1").arg(koronaList.get(0).coronaExposureSince < 0 ? "-" : koronaList.get(0).coronaExposureSince)
+                }
+                onClicked: {
+                    koronaExposuresText.visible = !koronaExposuresText.visible
+                    Mydb.saveSettings()
+                }
+            }
+
             Text {
                 id: koronaExposuresText
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.primaryColor
+                wrapMode: Text.WordWrap
+                width: parent.width
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    margins: Theme.paddingLarge
+                }
+                text: qsTr("By sending your exposure data to the server, you can check if somebody has exposured you to coronavirus.")
+            }
+
+            Text {
+                id: exposuresCheckedText
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.primaryColor
+                wrapMode: Text.WordWrap
+                width: parent.width
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    margins: Theme.paddingLarge
+                }
+                text: qsTr("Exposures checked from server: %1").arg("NOT KNOWN")
+            }
+
+            Text {
+                id: msgRow1
+                visible:false
                 font.pixelSize: Theme.fontSizeSmall
                 color: Theme.primaryColor
                 wrapMode: Text.WordWrap
@@ -68,17 +140,26 @@ Page {
             }
 
             Button {
-                id:sendMyKorona
-                text:"Check korona exposures"
+                id:checkMyKorona
+                text:qsTr("Check corona exposures")
                 anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: {
-                    Mydb.checkMyExposures()
+                    enabled = false;
+                    msgRow1.visible = false
+                    //Mydb.checkMyExposures()
                     koronaClient.sport = serverPort
                     koronaClient.sipadd = serverAddress
-                    koronaClient.exchangeDataWithServer()
+                    koronaClient.exchangeDataWithServer(Mydb.checkMyExposures())
                 }
             }
-            SectionHeader { text: qsTr("My korona disease") }
+            BackgroundItem {
+
+                SectionHeader { text: qsTr("My korona infection") }
+                onClicked: {
+                    koronaDiseaseText.visible = !koronaDiseaseText.visible
+                    Mydb.saveSettings()
+                }
+            }
             Text {
                 id: koronaDiseaseText
                 font.pixelSize: Theme.fontSizeSmall
@@ -92,33 +173,65 @@ Page {
                 }
                 text: qsTr("By sending my corona infection dates and exposure data to the server, I will help others to prevent of spreading the disease.")
             }
+
             Row{
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 Button {
                     id: koronaStart
-                    text: "Start date"
+                    text: qsTr("Start date")
 
                     onClicked: {
                         var dialog = pageStack.push(pickerComponent, {
-                                                        date: new Date('2020/05/09')
+                                                        date: covidStartDate != "" ? covidStartDate : new Date('2020/05/01')
                                                     })
                         dialog.accepted.connect(function() {
-                            koronaStart.text = "Start: " + dialog.dateText
+                            if((new Date(dialog.date)-new Date())/24/3600/1000 >0.5){
+                                console.log("Cannot send current day or newer", new Date(dialog.date),(new Date(dialog.date)-new Date())/24/3600/1000)
+                                covidStartDate = new Date()
+                                koronaStart.text = new Date(covidStartDate).toLocaleDateString(Qt.locale(),Locale.ShortFormat)
+                            }
+                            else if((new Date(dialog.date)-new Date(covidEndDate))/24/3600/1000 >0.5){
+                                covidStartDate = covidEndDate
+                                koronaStart.text = new Date(covidStartDate).toLocaleDateString(Qt.locale(),Locale.ShortFormat)
+
+                            }
+                            else {
+                                koronaStart.text = dialog.dateText
+                                covidStartDate = dialog.date
+                            }
+                            Mydb.saveSettings();
                         })
                     }
                 }
 
                 Button {
                     id: koronaEnd
-                    text: "End date"
+                    text: qsTr("End date")
 
                     onClicked: {
                         var dialog = pageStack.push(pickerComponent, {
-                                                        date: new Date('2020/05/09')
+                                                        date: covidEndDate != "" ? covidEndDate : new Date()
                                                     })
                         dialog.accepted.connect(function() {
-                            koronaEnd.text = "End: " + dialog.dateText
+                            if((new Date(dialog.date)-new Date())/24/3600/1000 >0.5){
+                                console.log("Cannot send current day or newer", new Date(dialog.date),(new Date(dialog.date)-new Date())/24/3600/1000)
+                                covidEndDate = new Date()
+                                koronaEnd.text = new Date(covidEndDate).toLocaleDateString(Qt.locale(),Locale.ShortFormat)
+                            }
+                            else if ((new Date(dialog.date)-new Date(covidStartDate))/24/3600/1000 < 0.5) {
+                                covidEndDate = covidStartDate
+                                koronaEnd.text = new Date(covidStartDate).toLocaleDateString(Qt.locale(),Locale.ShortFormat)
+                                console.log(covidEndDate)
+                                //console.log(new Date(covidEndDate)-new Date(covidStartDate))
+                            }
+                            else {
+                                koronaEnd.text = dialog.dateText
+                                covidEndDate = dialog.date
+                                console.log(covidEndDate)
+                                //console.log(new Date(covidEndDate)-new Date(covidStartDate))
+                            }
+                            Mydb.saveSettings();
                         })
                     }
                 }
@@ -128,17 +241,49 @@ Page {
                 DatePickerDialog {}
             }
 
-            Button {
-                text: "Send my disease data"
-                anchors.horizontalCenter: parent.horizontalCenter
-                onClicked:{
-                    console.log("Sent data")
+            Text {
+                id: exposuresSentText
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.primaryColor
+                wrapMode: Text.WordWrap
+                width: parent.width
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    margins: Theme.paddingLarge
                 }
+                text: qsTr("Infection data sent to the server: %1").arg("NOT KNOWN")
             }
 
 
+            Button {
+                id: sendMyKorona
+                text: qsTr("Send my infection data")
+                anchors.horizontalCenter: parent.horizontalCenter
+                onClicked:{
+                    enabled = false
+                    //Mydb.readMyKorona()
+                    koronaClient.sport = serverPort
+                    koronaClient.sipadd = serverAddress
+                    //koronaClient.exchangeDataWithServer("MyKoronaData")
+                    koronaClient.exchangeDataWithServer(Mydb.readMyKorona())
+                }
+            }
 
-
+            Text {
+                id: msgRow2
+                visible:false
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.primaryColor
+                wrapMode: Text.WordWrap
+                width: parent.width
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    margins: Theme.paddingLarge
+                }
+                text: ""
+            }
         }
     }
 
@@ -149,17 +294,8 @@ Page {
         repeat: true
         onTriggered: {
             Mydb.findHits(current_day());
-            //koronaScan.startScan();
-            //devicesSeen.text = qsTr("Devices seen today") + ": " + koronaList.get(0).devices
         }
     }
-
-    /*Timer{
-        interval: 70000
-        running: true
-        repeat: true
-        onTriggered: Mydb.findHits();
-    }*/
 
     ListModel {
         id: koronaList
@@ -167,20 +303,68 @@ Page {
             day:"today"
             devices: 0
             exposures: 0
+            coronaExposureSince: -1
         }
     }
 
     Koronascan {
         id:koronaScan
         onBtDeviceChanged:{
-            //console.log(current_day(),btDevice, btDevice.substring(0, 2))
             Mydb.addHits(btDevice, btDevice.substring(0, 2))
         }
     }
 
     Koronaclient {
         id: koronaClient
-        onCmoveChanged: console.log(cmove, "test")
+        onKorodataChanged:  console.log(korodata, "test")
+        onMsgChanged: {
+            switch (msg) {
+            case 1: // No connection to server
+                if (checkMyKorona.enabled == false){
+                    msgRow1.visible = true
+                    msgRow1.text = qsTr("Exposure status: ") + messages[msg].mesg
+                    checkMyKorona.enabled = true
+                }
+                else {
+                    msgRow2.visible = true
+                    msgRow2.text = qsTr("Data sent status: ") + messages[msg].mesg
+                    sendMyKorona.enabled = true
+                }
+                break;
+            case 2: // Exposured
+                msgRow1.visible = true
+                msgRow1.text = qsTr("Exposure status: ") + messages[msg].mesg
+                checkMyKorona.enabled = true
+                exposuresCheckedText.text = qsTr("Exposures checked from server: %1").arg(new Date().toLocaleString(Qt.locale(),Locale.ShortFormat))
+                break;
+            case 3: // Not exposured
+                msgRow1.visible = true
+                msgRow1.text = qsTr("Exposure status: ") + messages[msg].mesg
+                checkMyKorona.enabled = true
+                exposuresCheckedText.text = qsTr("Exposures checked from server: %1").arg(new Date().toLocaleString(Qt.locale(),Locale.ShortFormat))
+                break;
+            case 4: //Data sent
+                msgRow2.visible = true
+                msgRow2.text = qsTr("Data sent status: ") + messages[msg].mesg
+                sendMyKorona.enabled = true
+                exposuresSentText.text = qsTr("Infection data sent to the server: %1").arg(new Date().toLocaleString(Qt.locale(),Locale.ShortFormat))
+                break;
+            default:
+                break;
+            }
+
+        }
+        onMsg2Changed: {
+            if (msg2 > new Date().getDate()){
+                //rough estimate
+                koronaList.set(0,{"coronaExposureSince": new Date().getDate() + 31 - msg2})
+            }
+            else {
+                koronaList.set(0,{"coronaExposureSince": new Date().getDate() - msg2})
+            }
+
+            headDaysCorona.text = qsTr("Days from last corona exposure: %1").arg(koronaList.get(0).coronaExposureSince < 0 ? "-" : koronaList.get(0).coronaExposureSince)
+        }
     }
 
 
@@ -199,5 +383,8 @@ Page {
         Mydb.findHits(current_day());
         koronaScan.ctime = discoveryTimer;
         Mydb.deleteOldData(current_day())
+        Mydb.loadSettings()
+        covidStartDate != "" ? koronaStart.text = new Date(covidStartDate).toLocaleDateString(Qt.locale(),Locale.ShortFormat) : koronaStart.text = qsTr("Start date")
+        covidEndDate != "" ? koronaEnd.text = new Date(covidEndDate).toLocaleDateString(Qt.locale(),Locale.ShortFormat) : koronaEnd.text = qsTr("End date")
     }
 }

@@ -146,7 +146,7 @@ Page {
 
             Koronaclient {
                 id: koronaClient
-                onCmoveChanged: console.log(cmove, "test")
+                onKorodataChanged:  console.log(korodata, "test")
             }
 
 

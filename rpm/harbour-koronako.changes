@@ -11,6 +11,9 @@
 
 # * date Author's Name <author's email> version-release
 # - Summary of changes
+* Sat May 23 2020 Riku Lahtinen <rikul.lajolla@kiu.as> 0.0.7-1
+- First version for OpenRepos release
+
 * Sat May 16 2020 Riku Lahtinen <rikul.lajolla@kiu.as> 0.0.6-1
 - Very basic functionality with simple tcpserver
 

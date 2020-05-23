@@ -78,53 +78,6 @@ Device::~Device()
     delete discoveryAgent;
 }
 
-void Device::addDevice(const QBluetoothDeviceInfo &info)
-{
-    /*QString label = QString("%1 %2").arg(info.address().toString()).arg(info.name());
-    QString mybt;
-    uint mybtint;
-    QString yourbt;
-    uint yourbtint;
-    QString sumbt = QDateTime::currentDateTime().toString("dd") +":";
-    uint sumbtint;
-    QString sumbttotal = QDateTime::currentDateTime().toString("dd");*/
-    /* Code seems not work properly when discovery is not finished
-    if (info.majorDeviceClass() == QBluetoothDeviceInfo::PhoneDevice) {
-        //Unpaired device is not telling major device class
-        qDebug() << "Phone " << label << info.rssi() << info.isCached()<< info.deviceUuid().toString();
-    }
-    else {
-        qDebug() << "Other " << label<< info.rssi()<< info.isCached() << info.deviceUuid().toString();
-    }
-    */
-    /*QBluetoothLocalDevice::Pairing pairingStatus = localDevice->pairingStatus(info.address());
-    if (pairingStatus == QBluetoothLocalDevice::Unpaired)
-        // if (pairingStatus == QBluetoothLocalDevice::Paired || pairingStatus == QBluetoothLocalDevice::AuthorizedPaired )
-    {
-        //qDebug() << "Unpaired " << localDevice->address() << info.address() ;
-        for ( int i =3 ; i < 16; i = i + 3 ) {
-            mybt = localDevice->address().toString().mid(i,1);
-            // https://forum.qt.io/topic/31737/solved-convert-ascii-hex-to-int
-            bool bStatus = false;
-            mybtint = mybt.toUInt(&bStatus,16);
-            yourbt = QString("%1").arg(info.address().toString()).mid(i,1);
-            yourbtint = yourbt.toUInt(&bStatus,16);
-            sumbtint = mybtint + yourbtint;
-            // https://doc.qt.io/qt-5/qstring.html#arg
-            // https://forum.qt.io/topic/28890/convert-from-int-to-hex/8
-            sumbt = QString("%1").arg(sumbtint, 2, 16, QLatin1Char( '0' ));
-            sumbttotal = sumbttotal + ":" + sumbt ;
-            //qDebug() << mybtint << yourbtint << sumbtint << sumbttotal;
-        }
-
-        qDebug() << "Unpaired mixed" << sumbttotal << "Phone " << label;
-        ;
-        myBtDevice = sumbttotal;
-        btDeviceChanged(myBtDevice);
-        //emit btDeviceChanged; //Have to study later if signal could be coded more simple way
-    }*/
-}
-
 void Device::startScan()
 {
     discoveryAgent->start();

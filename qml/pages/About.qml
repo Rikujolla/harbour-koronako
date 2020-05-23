@@ -69,7 +69,7 @@ Page {
                     margins: Theme.paddingLarge
                 }
                 //: The name of the app followed with a version number
-                text: {qsTr("Koronako, version") + " 0.0.6"}
+                text: {qsTr("Koronako, version") + " 0.0.7"}
             }
 
             SectionHeader { text: qsTr("Idea") }
@@ -85,7 +85,7 @@ Page {
                 }
                 text: {
                     qsTr("The idea of the software is to scan devices with bluetooth to help determine possible coronavirus exposures.")
-                            + qsTr(" In addition of the app a proper server application should be developed.")
+                            + qsTr(" In addition of the app a proper server application (koronako-server) is needed.")
                 }
             }
 

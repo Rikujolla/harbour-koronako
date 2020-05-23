@@ -130,31 +130,78 @@ void Client::startClient()
     }
 }
 
-void Client::exchangeDataWithServer()
+void Client::exchangeDataWithServer(QString _toTcp)
 {
-    int values = 1;
-    while (values > 0) {
-        QString pairData = "30:12:e5:2e:5w:33";
-        std::string temp = myExpdata.toStdString();
-        //std::string part(temp.substr(0, 5));
-        char temp2[1024];
-        strcpy(temp2, temp.c_str());
-        tcpSocket->connectToHost(mySipadd,mySport);
-        tcpSocket->write(temp2,temp.length());
-        QString result;
-        result = temp2;
-        qDebug() << "Move request sent" << mySipadd << mySport << result;
-        values--;
+    QString pairData = "";
+    // Selecting if the function is used to send disease data to server or only for testing if exposured
+    if (_toTcp == "MyKoronaData"){
+        pairData = myKorodata;
+        qDebug() << _toTcp;
+    }
+    else {
+        pairData = myExpdata;
+        qDebug() << _toTcp;
     }
 
-    tcpSocket->waitForReadyRead();
-    qDebug() << "Reading: " << tcpSocket->bytesAvailable();
+    tcpSocket->connectToHost(mySipadd,mySport);
 
-    QByteArray temp2 = tcpSocket->readAll();
-    QString nextFortune = QString::fromStdString(temp2.toStdString());
-    qDebug() << "Server answers: " << nextFortune;
+    if (tcpSocket->waitForConnected(5000)) {
+        qDebug("Connected!");
 
-    tcpSocket->disconnectFromHost();
+        int values = 1;
+        while (values > 0) {
+            std::string temp = pairData.toStdString();
+            //std::string part(temp.substr(0, 5));
+            char temp2[4096];
+            strcpy(temp2, temp.c_str());
+            tcpSocket->write(temp2,temp.length());
+            QString result;
+            result = temp2;
+            qDebug() << "Move request sent" << mySipadd << mySport << result;
+            values--;
+        }
+
+        if(tcpSocket->waitForReadyRead()){
+        qDebug() << "Reading: " << tcpSocket->bytesAvailable();
+
+        QByteArray temp2 = tcpSocket->readAll();
+        QString nextFortune = QString::fromStdString(temp2.toStdString());
+        if (nextFortune.left(10) == "EXPOSUREDD"){
+            myMsg = 2; // Exposure message
+            msgChanged(myMsg);
+            myMsg2 = nextFortune.right(2).toInt();
+            msg2Changed(myMsg2);
+            qDebug() << "Server answers: " << nextFortune << myMsg << myMsg2;
+        }
+        else if (nextFortune.left(10) == "NOEXPOSURE"){
+            qDebug() << "Server answers: " << nextFortune;
+            myMsg = 3; // Noexposure message
+            msgChanged(myMsg);
+        }
+        else if (nextFortune.left(10) == "SENTCOVIDD") {
+            qDebug() << "Server answers: " << nextFortune;
+            myMsg = 4; // Sent data message
+            msgChanged(myMsg);
+        }
+        else {
+            qDebug() << "Server answers error: " << nextFortune;
+            myMsg = 5; // Error message
+            msgChanged(myMsg);
+
+        }
+        tcpSocket->disconnectFromHost();
+        }
+        else {
+            tcpSocket->abort();
+            qDebug("Data could not be read");
+        }
+    }
+    else {
+        tcpSocket->abort();
+        myMsg = 1; // No connection message
+        msgChanged(myMsg);
+        qDebug("Not connected!");
+    }
 }
 
 void Client::readFortune()

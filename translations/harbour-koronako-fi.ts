@@ -50,31 +50,31 @@
     </message>
     <message>
         <source>The idea of the software is to scan devices with bluetooth to help determine possible coronavirus exposures.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ohjelman ideana on skannata bluetooth-puhelimia, jotta voidaan määrittää altistuminen koronavirukselle.</translation>
     </message>
     <message>
         <source> In addition of the app a proper server application should be developed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kesken</translation>
     </message>
     <message>
         <source>The basic idea to maintain your and others privacy is a symmetric bluetooth address mix of the devices.</source>
-        <translation type="unfinished"></translation>
+        <translation>Yksityisyyden säilyttämisen perusidea on sekoittaa symmetrisesti havaitsijan ja havaitun puhelimen bluetooth-osoitteen osia.</translation>
     </message>
     <message>
         <source> Because only part of the address is used false alarms are possible occasionally.</source>
-        <translation type="unfinished"></translation>
+        <translation> Koska vain osaa osoitteesta käytetään satunnaiset virhehälytykset ovat mahdollisia.</translation>
     </message>
     <message>
         <source>Only mixed bluetooth address and a month day number is saved to the database preventing data hacking later.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vain sekoitettu bluetooth-osoite ja kuukauden päivä tallennetaan, mikä estää osoitteiden selvittämisen jälkikäteen.</translation>
     </message>
     <message>
         <source> Nor more than one month data can be saved.</source>
-        <translation type="unfinished"></translation>
+        <translation> Lisäksi vain yhden kuukauden data voidaan tallentaa.</translation>
     </message>
     <message>
         <source>Copyright (c) 2020, Riku Lahtinen</source>
-        <translation type="unfinished">Copyright (c) 2020, Riku Lahtinen {2020,?}</translation>
+        <translation>Copyright (c) 2020, Riku Lahtinen</translation>
     </message>
 </context>
 <context>
@@ -88,78 +88,131 @@
 <context>
     <name>MainPage</name>
     <message>
-        <source>Main page</source>
-        <translation>Pääsivu</translation>
-    </message>
-    <message>
         <source>About</source>
         <translation>Tietoja</translation>
     </message>
     <message>
-        <source>Korona exposures</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Device exposures</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>My korona disease</source>
-        <translation type="unfinished"></translation>
+        <translation>Asetukset</translation>
     </message>
     <message>
         <source>By sending my corona infection dates and exposure data to the server, I will help others to prevent of spreading the disease.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lähettämällä koronainfektion päivämäärät ja altistumisdatan palvelimelle autat estämään taudin leviämistä.</translation>
+    </message>
+    <message>
+        <source>Start date</source>
+        <translation>Alkupvm</translation>
+    </message>
+    <message>
+        <source>End date</source>
+        <translation>Loppupvm</translation>
+    </message>
+    <message>
+        <source>Not connected to server!</source>
+        <translation>Ei yhteyttä palvelimeen!</translation>
+    </message>
+    <message>
+        <source>Phones close of my phone: %1</source>
+        <translation>Puhelimia puhelimeni lähellä: %1</translation>
+    </message>
+    <message>
+        <source>Number of the phones the Koronako app has detected today close of your phone.</source>
+        <translation>Korona-sovelluksen havaitsemien lähellä olevien puhelimien määrä tänään.</translation>
+    </message>
+    <message>
+        <source>Phone exposures: %1</source>
+        <translation>Puhenlinaltistumisia: %1</translation>
+    </message>
+    <message>
+        <source>Number of the those phones that have exceeded determined exposure time.</source>
+        <translation>Niiden puhelimien lukumäärä, jotka ovat ylittäneet määritetyn altistumisajan.</translation>
+    </message>
+    <message>
+        <source>By sending your exposure data to the server, you can check if somebody has exposured you to coronavirus.</source>
+        <translation>Lähettämällä altustumisdatan palvelimelle voit tarkistaa onko joku altistanut sinut koronavirukselle.</translation>
+    </message>
+    <message>
+        <source>Check corona exposures</source>
+        <translation>Tarkista korona-altistus</translation>
+    </message>
+    <message>
+        <source>Exposures checked from server: %1</source>
+        <translation>Altistumiset tarkistettu palvelimelta: %1</translation>
+    </message>
+    <message>
+        <source>Exposured!</source>
+        <translation>Altistunut!</translation>
+    </message>
+    <message>
+        <source>No exposure!</source>
+        <translation>Ei altistusta!</translation>
+    </message>
+    <message>
+        <source>Sent corona data!</source>
+        <translation>Korona-tiedot lähetetty!</translation>
+    </message>
+    <message>
+        <source>Error!</source>
+        <translatio>Virhe!</translation>
+    </message>
+    <message>
+        <source>Exposure status: </source>
+        <translation>Altistumistilanne: </translation>
+    </message>
+    <message>
+        <source>Data sent status: </source>
+        <translation>Datan lähettämisen tilanne: </translation>
+    </message>
+    <message>
+        <source>My korona infection</source>
+        <translation>Koronainfektioni</translation>
+    </message>
+    <message>
+        <source>Send my infection data</source>
+        <translation>Lähetä infektion tiedot</translation>
+    </message>
+    <message>
+        <source>Days from last corona exposure: %1</source>
+        <translation>Päiviä viimeisimmästä altistuksesta: </translation>
+    </message>
+    <message>
+        <source>Infection data sent to the server: %1</source>
+        <translation>Infektiotiedot lähetetty palvelimelle: %1</translation>
+    </message>
+    <message>
+        <source>Today</source>
+        <translation>Tänään</translation>
     </message>
 </context>
 <context>
     <name>Settings</name>
     <message>
         <source>Settings page</source>
-        <translation type="unfinished"></translation>
+        <translation>Asetussivu</translation>
     </message>
     <message>
         <source>Server settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Palvelinasetukset</translation>
     </message>
     <message>
         <source>Insert here address info of your koronako-server</source>
-        <translation type="unfinished"></translation>
+        <translation>Syötä tähän koronako-server -ohjelman osoite</translation>
     </message>
     <message>
         <source>IP address</source>
-        <translation type="unfinished"></translation>
+        <translation>IP-osoite</translation>
     </message>
     <message>
         <source>Port number</source>
-        <translation type="unfinished"></translation>
+        <translation>Porttinumero</translation>
     </message>
     <message>
         <source>Other settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Muut asetukset</translation>
     </message>
     <message>
         <source>Timer settings etc</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>databases</name>
-    <message>
-        <source>Korona app has detected today %1 phones close of your phone.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> Of those phones %1 have exceeded determined exposure time.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>By sending your exposure data to the server, you can check if somebody has exposured you to coronavirus.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajastinasetukset etc</translation>
     </message>
 </context>
 </TS>

@@ -53,10 +53,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> In addition of the app a proper server application should be developed.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>The basic idea to maintain your and others privacy is a symmetric bluetooth address mix of the devices.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -76,6 +72,10 @@
         <source>Copyright (c) 2020, Riku Lahtinen</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source> In addition of the app a proper server application (koronako-server) is needed.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CoverPage</name>
@@ -88,15 +88,7 @@
 <context>
     <name>MainPage</name>
     <message>
-        <source>Main page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Korona exposures</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -104,15 +96,91 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Device exposures</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>My korona disease</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>By sending my corona infection dates and exposure data to the server, I will help others to prevent of spreading the disease.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not connected to server!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phones close of my phone: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of the phones the Koronako app has detected today close of your phone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phone exposures: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of the those phones that have exceeded determined exposure time.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>By sending your exposure data to the server, you can check if somebody has exposured you to coronavirus.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check corona exposures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exposures checked from server: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exposured!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No exposure!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sent corona data!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exposure status: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Data sent status: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My korona infection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send my infection data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Days from last corona exposure: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Infection data sent to the server: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Today</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -144,21 +212,6 @@
     </message>
     <message>
         <source>Timer settings etc</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>databases</name>
-    <message>
-        <source>Korona app has detected today %1 phones close of your phone.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> Of those phones %1 have exceeded determined exposure time.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>By sending your exposure data to the server, you can check if somebody has exposured you to coronavirus.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

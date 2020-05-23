@@ -88,7 +88,6 @@ signals:
     void ctimeChanged(int te14);
 
 public slots:
-    void addDevice(const QBluetoothDeviceInfo&);
     void on_discoverable_clicked(bool clicked);
 private slots:
     void scanFinished();

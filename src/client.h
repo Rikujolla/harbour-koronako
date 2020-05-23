@@ -64,8 +64,9 @@ class Client : public QObject
     Q_OBJECT
     Q_PROPERTY(QString sipadd READ sipadd WRITE setSipadd NOTIFY sipaddChanged) //Server address
     Q_PROPERTY(int sport READ sport WRITE setSport NOTIFY sportChanged) // Server port
-    Q_PROPERTY(QString cmove READ cmove WRITE setCmove NOTIFY cmoveChanged) //opponents move
-    Q_PROPERTY(int ctime READ ctime WRITE setCtime NOTIFY ctimeChanged) // to be removed
+    Q_PROPERTY(QString korodata READ korodata WRITE setKorodata NOTIFY korodataChanged) //opponents move
+    Q_PROPERTY(int msg READ msg WRITE setMsg NOTIFY msgChanged) // For messages
+    Q_PROPERTY(int msg2 READ msg2 WRITE setMsg2 NOTIFY msg2Changed) // For messages
     Q_PROPERTY(QString expdata READ expdata WRITE setExpdata NOTIFY expdataChanged)
 
 public:
@@ -81,31 +82,36 @@ public:
       mySport = tee2;
       sportChanged(mySport);
     }
-    QString cmove(){return myCmove;}
-    void setCmove(QString tee3){
-      myCmove = tee3;
-      cmoveChanged(myCmove);
+    QString korodata(){return myKorodata;}
+    void setKorodata(QString tee3){
+      myKorodata = tee3;
+      korodataChanged(myKorodata);
     }
-    int ctime(){return oppTime;}
-    void setCtime(int tee4){
-      oppTime = tee4;
-      ctimeChanged(oppTime);
+    int msg(){return myMsg;}
+    void setMsg(int tee4){
+      myMsg = tee4;
+      msgChanged(myMsg);
+    }
+    int msg2(){return myMsg2;}
+    void setMsg2(int tee5){
+      myMsg2 = tee5;
+      msgChanged(myMsg2);
     }
     QString expdata(){return myExpdata;}
     void setExpdata(QString tee6){
       myExpdata = tee6;
       expdataChanged(myExpdata);
     }
-    Q_INVOKABLE void exchangeDataWithServer();
+    Q_INVOKABLE void exchangeDataWithServer(QString toTcp);
     Q_INVOKABLE void startClient();
     QString getExposures();
 
 signals:
     void sipaddChanged(QString tee1);
     void sportChanged(int tee2);
-    void cmoveChanged(QString tee3);
-    void ctimeChanged(int tee4);
-    void cincremChanged(int tee5);
+    void korodataChanged(QString tee3);
+    void msgChanged(int tee4);
+    void msg2Changed(int tee5);
     void expdataChanged(QString tee6);
 
 private slots:
@@ -121,8 +127,9 @@ private:
     QNetworkSession *networkSession;
     QString mySipadd;
     int mySport;
-    QString myCmove;
-    int oppTime;
+    QString myKorodata;
+    int myMsg;
+    int myMsg2;
     QString myExpdata;
 
 };
