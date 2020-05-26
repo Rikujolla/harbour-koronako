@@ -171,7 +171,6 @@ function findHits(_day) {
                     // Set new result to the list model
                     else if (rs.rows.length > 0) {
                         koronaList.set(0,{"exposures": rs.rows.item(0).cdevicepair})
-                        //console.log("exposures",rs.rows.item(0).cdevicepair)
                     }
                     // If no search results do nothing
                     else {}
@@ -218,7 +217,7 @@ function checkMyExposures() {
                     tx.executeSql('CREATE TABLE IF NOT EXISTS Exposures(devicepair TEXT, day TEXT, hits INTEGER)');
 
                     var rs = tx.executeSql('SELECT devicepair FROM Exposures WHERE hits > ?', [minHits]);
-                    var _exposurelist = ''
+                    var _exposurelist = '00:10:00:00:00:00'
                     for (var i = 1; i<rs.rows.length;i++){
 
                         _exposurelist = _exposurelist +  rs.rows.item(i).devicepair
@@ -250,13 +249,11 @@ function readMyKorona() {
                         if (new Date().getDate()>25){
                             ls = hs = new Date().getDate()-25
                             le = new Date(covidEndDate).getDate()
-                            console.log(">25")
                         }
                         else {
                             ls = 31 + new Date().getDate()-25
                             le = 31
                             hs = 1
-                            console.log("<25")
                         }
 
                         he = new Date(covidEndDate).getDate()
@@ -267,12 +264,10 @@ function readMyKorona() {
                         le = 31
                         hs = 1
                         he = new Date(covidEndDate).getDate()
-                        console.log("Different month", ls, le, hs, he)
                     }
                     else {
                         ls = hs = new Date(covidStartDate).getDate()
                         le = he = new Date(covidEndDate).getDate()
-                        console.log("Clear case", ls, le, hs, he)
                     }
 
 

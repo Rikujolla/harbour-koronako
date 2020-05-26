@@ -133,15 +133,8 @@ void Client::startClient()
 void Client::exchangeDataWithServer(QString _toTcp)
 {
     QString pairData = "";
-    // Selecting if the function is used to send disease data to server or only for testing if exposured
-    if (_toTcp == "MyKoronaData"){
-        pairData = myKorodata;
-        qDebug() << _toTcp;
-    }
-    else {
-        pairData = myExpdata;
-        qDebug() << _toTcp;
-    }
+    //qDebug() << _toTcp << "TCP";
+    pairData = myExpdata;
 
     tcpSocket->connectToHost(mySipadd,mySport);
 
@@ -157,12 +150,12 @@ void Client::exchangeDataWithServer(QString _toTcp)
             tcpSocket->write(temp2,temp.length());
             QString result;
             result = temp2;
-            qDebug() << "Move request sent" << mySipadd << mySport << result;
+            //qDebug() << "Move request sent" << mySipadd << mySport << result;
             values--;
         }
 
         if(tcpSocket->waitForReadyRead()){
-        qDebug() << "Reading: " << tcpSocket->bytesAvailable();
+        //qDebug() << "Reading: " << tcpSocket->bytesAvailable();
 
         QByteArray temp2 = tcpSocket->readAll();
         QString nextFortune = QString::fromStdString(temp2.toStdString());
@@ -171,20 +164,20 @@ void Client::exchangeDataWithServer(QString _toTcp)
             msgChanged(myMsg);
             myMsg2 = nextFortune.right(2).toInt();
             msg2Changed(myMsg2);
-            qDebug() << "Server answers: " << nextFortune << myMsg << myMsg2;
+            //qDebug() << "Server answers: " << nextFortune << myMsg << myMsg2;
         }
         else if (nextFortune.left(10) == "NOEXPOSURE"){
-            qDebug() << "Server answers: " << nextFortune;
+            //qDebug() << "Server answers: " << nextFortune;
             myMsg = 3; // Noexposure message
             msgChanged(myMsg);
         }
         else if (nextFortune.left(10) == "SENTCOVIDD") {
-            qDebug() << "Server answers: " << nextFortune;
+            //qDebug() << "Server answers: " << nextFortune;
             myMsg = 4; // Sent data message
             msgChanged(myMsg);
         }
         else {
-            qDebug() << "Server answers error: " << nextFortune;
+            //qDebug() << "Server answers error: " << nextFortune;
             myMsg = 5; // Error message
             msgChanged(myMsg);
 
@@ -193,14 +186,14 @@ void Client::exchangeDataWithServer(QString _toTcp)
         }
         else {
             tcpSocket->abort();
-            qDebug("Data could not be read");
+            //qDebug("Data could not be read");
         }
     }
     else {
         tcpSocket->abort();
         myMsg = 1; // No connection message
         msgChanged(myMsg);
-        qDebug("Not connected!");
+        //qDebug("Not connected!");
     }
 }
 

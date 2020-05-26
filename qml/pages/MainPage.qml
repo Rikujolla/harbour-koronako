@@ -186,11 +186,12 @@ Page {
                                                         date: covidStartDate != "" ? covidStartDate : new Date('2020/05/01')
                                                     })
                         dialog.accepted.connect(function() {
+                            // Not accepting future date
                             if((new Date(dialog.date)-new Date())/24/3600/1000 >0.5){
-                                console.log("Cannot send current day or newer", new Date(dialog.date),(new Date(dialog.date)-new Date())/24/3600/1000)
                                 covidStartDate = new Date()
                                 koronaStart.text = new Date(covidStartDate).toLocaleDateString(Qt.locale(),Locale.ShortFormat)
                             }
+                            // Start date cannot be newer than end date
                             else if((new Date(dialog.date)-new Date(covidEndDate))/24/3600/1000 >0.5){
                                 covidStartDate = covidEndDate
                                 koronaStart.text = new Date(covidStartDate).toLocaleDateString(Qt.locale(),Locale.ShortFormat)
@@ -214,22 +215,19 @@ Page {
                                                         date: covidEndDate != "" ? covidEndDate : new Date()
                                                     })
                         dialog.accepted.connect(function() {
+                            // Not accepting future date
                             if((new Date(dialog.date)-new Date())/24/3600/1000 >0.5){
-                                console.log("Cannot send current day or newer", new Date(dialog.date),(new Date(dialog.date)-new Date())/24/3600/1000)
                                 covidEndDate = new Date()
                                 koronaEnd.text = new Date(covidEndDate).toLocaleDateString(Qt.locale(),Locale.ShortFormat)
                             }
+                            // End day cannot be earlier than start date
                             else if ((new Date(dialog.date)-new Date(covidStartDate))/24/3600/1000 < 0.5) {
                                 covidEndDate = covidStartDate
                                 koronaEnd.text = new Date(covidStartDate).toLocaleDateString(Qt.locale(),Locale.ShortFormat)
-                                console.log(covidEndDate)
-                                //console.log(new Date(covidEndDate)-new Date(covidStartDate))
                             }
                             else {
                                 koronaEnd.text = dialog.dateText
                                 covidEndDate = dialog.date
-                                console.log(covidEndDate)
-                                //console.log(new Date(covidEndDate)-new Date(covidStartDate))
                             }
                             Mydb.saveSettings();
                         })
@@ -288,12 +286,13 @@ Page {
     }
 
     Timer{
-        //interval: 120000
-        interval: 20000 //for testing
+        interval: discoveryTimer
+        //interval: 20000 //for testing
         running: true
         repeat: true
         onTriggered: {
             Mydb.findHits(current_day());
+            koronaScan.startScan();
         }
     }
 

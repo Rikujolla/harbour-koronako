@@ -67,9 +67,9 @@ Device::Device(QObject *parent)
 
     hostModeStateChanged(localDevice->hostMode());
 
-    timer.connect(&timer, SIGNAL(timeout()), this, SLOT(startScan()));
-    timer.setSingleShot(false);
-    timer.start(dTimer);
+    //timer.connect(&timer, SIGNAL(timeout()), this, SLOT(startScan()));
+    //timer.setSingleShot(false);
+    //timer.start(dTimer);
 
 }
 
@@ -113,7 +113,7 @@ void Device::scanFinished()
                     sumbttotal = sumbttotal + ":" + sumbt ;
                 }
 
-                qDebug() << "Phone" << discoveryAgent->discoveredDevices().at(i).address() << discoveryAgent->discoveredDevices().at(i).rssi() << sumbttotal;
+                //qDebug() << "Phone" << discoveryAgent->discoveredDevices().at(i).address() << discoveryAgent->discoveredDevices().at(i).rssi() << sumbttotal;
                 myBtDevice = sumbttotal;
                 btDeviceChanged(myBtDevice);
             }
