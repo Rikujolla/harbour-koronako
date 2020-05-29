@@ -176,11 +176,15 @@ void Client::exchangeDataWithServer(QString _toTcp)
             myMsg = 4; // Sent data message
             msgChanged(myMsg);
         }
-        else {
+        else if (nextFortune.left(10) == "ERRORERROR") {
             //qDebug() << "Server answers error: " << nextFortune;
             myMsg = 5; // Error message
             msgChanged(myMsg);
-
+        }
+        else {
+            //qDebug() << "Server answers error: " << nextFortune;
+            myMsg = 6; // Error message
+            msgChanged(myMsg);
         }
         tcpSocket->disconnectFromHost();
         }

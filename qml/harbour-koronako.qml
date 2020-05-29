@@ -8,6 +8,7 @@ ApplicationWindow
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations: defaultAllowedOrientations
 
+    property string version : "0.0.9"
     property string covidStartDate : "" // Start date for my corona
     property string covidEndDate : "" // End date for my corona
     property int minHits : 15 // minimum amount of hits to give exposure, related to discoveryTimer

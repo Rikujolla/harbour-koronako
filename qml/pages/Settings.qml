@@ -84,7 +84,7 @@ Page {
                         EnterKey.onClicked: {
                             koronaClient.sipadd = text;
                             serverAddress = text;
-                            Mydb.saveSettings();
+                            Mydb.saveSettings(0);
                             focus = false;
                         }
                     }
@@ -96,7 +96,7 @@ Page {
                                                                       : Theme.primaryColor)
                         onClicked: {
                             iipee.text = ""
-                            Mydb.saveSettings();
+                            Mydb.saveSettings(0);
                         }
                     }
                 }
@@ -113,7 +113,7 @@ Page {
                             EnterKey.onClicked: {
                                 koronaClient.sport = text
                                 serverPort = text;
-                                Mydb.saveSettings();
+                                Mydb.saveSettings(0);
                                 focus = false;
                             }
                         }

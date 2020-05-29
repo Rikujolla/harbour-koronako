@@ -5,7 +5,7 @@
     <name>About</name>
     <message>
         <source>About page</source>
-        <translation type="unfinished"></translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>Idea</source>
@@ -152,10 +152,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Exposure status: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -181,6 +177,14 @@
     </message>
     <message>
         <source>Today</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wrong app version!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other error!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -11,6 +11,10 @@
 
 # * date Author's Name <author's email> version-release
 # - Summary of changes
+* Fri May 29 2020 Riku Lahtinen <rikul.lajolla@kiu.as> 0.0.9-1
+- Disabling own phone exposure bug
+- Repaired other minor bugs
+
 * Tue May 26 2020 Riku Lahtinen <rikul.lajolla@kiu.as> 0.0.8-1
 - Fixed github issues #1 and #2
 

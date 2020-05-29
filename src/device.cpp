@@ -88,7 +88,7 @@ void Device::scanFinished()
     qDebug() << "Finished" << discoveryAgent->discoveredDevices().count() ;
     for (int i=0 ; i < discoveryAgent->discoveredDevices().count();i++){
         if (discoveryAgent->discoveredDevices().at(i).majorDeviceClass() == QBluetoothDeviceInfo::PhoneDevice){
-            if (discoveryAgent->discoveredDevices().at(i).rssi() < 0 && discoveryAgent->discoveredDevices().at(i).rssi() > -70){qDebug() << "Phone_small";}
+            //if (discoveryAgent->discoveredDevices().at(i).rssi() < 0 && discoveryAgent->discoveredDevices().at(i).rssi() > -70){qDebug() << "Phone_small";}
             QString mybt;
             uint mybtint;
             QString yourbt;

@@ -13,7 +13,8 @@ Page {
         {mesg:qsTr("Exposured!")},
         {mesg:qsTr("No exposure!")},
         {mesg:qsTr("Sent corona data!")},
-        {mesg:qsTr("Error!")}
+        {mesg:qsTr("Wrong app version!")},
+        {mesg:qsTr("Other error!")}
     ]
 
     // The effective value will be restricted by ApplicationWindow.allowedOrientations
@@ -47,7 +48,7 @@ Page {
                 SectionHeader { text: qsTr("Phones close of my phone: %1").arg(koronaList.get(0).devices) }
                 onClicked: {
                     closeText.visible = !closeText.visible
-                    Mydb.saveSettings()
+                    Mydb.saveSettings(1)
                 }
             }
             Text {
@@ -68,7 +69,7 @@ Page {
                 SectionHeader { text: qsTr("Phone exposures: %1").arg(koronaList.get(0).exposures) }
                 onClicked: {
                     exposuresText.visible = !exposuresText.visible
-                    Mydb.saveSettings()
+                    Mydb.saveSettings(1)
                 }
             }
             Text {
@@ -92,7 +93,7 @@ Page {
                 }
                 onClicked: {
                     koronaExposuresText.visible = !koronaExposuresText.visible
-                    Mydb.saveSettings()
+                    Mydb.saveSettings(1)
                 }
             }
 
@@ -157,7 +158,7 @@ Page {
                 SectionHeader { text: qsTr("My korona infection") }
                 onClicked: {
                     koronaDiseaseText.visible = !koronaDiseaseText.visible
-                    Mydb.saveSettings()
+                    Mydb.saveSettings(1)
                 }
             }
             Text {
@@ -201,7 +202,7 @@ Page {
                                 koronaStart.text = dialog.dateText
                                 covidStartDate = dialog.date
                             }
-                            Mydb.saveSettings();
+                            Mydb.saveSettings(1);
                         })
                     }
                 }
@@ -229,7 +230,7 @@ Page {
                                 koronaEnd.text = dialog.dateText
                                 covidEndDate = dialog.date
                             }
-                            Mydb.saveSettings();
+                            Mydb.saveSettings(1);
                         })
                     }
                 }
@@ -260,6 +261,8 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 onClicked:{
                     enabled = false
+                    koronaStart.enabled = false
+                    koronaEnd.enabled = false
                     //Mydb.readMyKorona()
                     koronaClient.sport = serverPort
                     koronaClient.sipadd = serverAddress
@@ -328,6 +331,8 @@ Page {
                     msgRow2.visible = true
                     msgRow2.text = qsTr("Data sent status: ") + messages[msg].mesg
                     sendMyKorona.enabled = true
+                    koronaStart.enabled = true
+                    koronaEnd.enabled = true
                 }
                 break;
             case 2: // Exposured
@@ -343,10 +348,27 @@ Page {
                 exposuresCheckedText.text = qsTr("Exposures checked from server: %1").arg(new Date().toLocaleString(Qt.locale(),Locale.ShortFormat))
                 break;
             case 4: //Data sent
+                Mydb.removeMyKorona()
                 msgRow2.visible = true
                 msgRow2.text = qsTr("Data sent status: ") + messages[msg].mesg
                 sendMyKorona.enabled = true
+                koronaStart.enabled = true
+                koronaEnd.enabled = true
                 exposuresSentText.text = qsTr("Infection data sent to the server: %1").arg(new Date().toLocaleString(Qt.locale(),Locale.ShortFormat))
+                break;
+            case 5: // Wrong app version
+                if (checkMyKorona.enabled == false){
+                    msgRow1.visible = true
+                    msgRow1.text = qsTr("Exposure status: ") + messages[msg].mesg
+                    checkMyKorona.enabled = true
+                }
+                else {
+                    msgRow2.visible = true
+                    msgRow2.text = qsTr("Data sent status: ") + messages[msg].mesg
+                    sendMyKorona.enabled = true
+                    koronaStart.enabled = true
+                    koronaEnd.enabled = true
+                }
                 break;
             default:
                 break;
