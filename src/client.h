@@ -55,6 +55,7 @@
 #include <QObject>
 #include <QTcpSocket>
 #include <QDataStream>
+#include <QSslSocket>
 
 class QTcpSocket;
 class QNetworkSession;
@@ -121,7 +122,7 @@ private slots:
     void sessionOpened();
 
 private:
-    QTcpSocket *tcpSocket;
+    QSslSocket *tcpSocket;
     QDataStream in;
     QString currentFortune;
     QNetworkSession *networkSession;

@@ -85,39 +85,42 @@ void Device::startScan()
 
 void Device::scanFinished()
 {
-    qDebug() << "Finished" << discoveryAgent->discoveredDevices().count() ;
+    //qDebug() << "Finished" << discoveryAgent->discoveredDevices().count() ;
     for (int i=0 ; i < discoveryAgent->discoveredDevices().count();i++){
-        if (discoveryAgent->discoveredDevices().at(i).majorDeviceClass() == QBluetoothDeviceInfo::PhoneDevice){
-            //if (discoveryAgent->discoveredDevices().at(i).rssi() < 0 && discoveryAgent->discoveredDevices().at(i).rssi() > -70){qDebug() << "Phone_small";}
-            QString mybt;
-            uint mybtint;
-            QString yourbt;
-            uint yourbtint;
-            QString sumbt = QDateTime::currentDateTime().toString("dd") +":";
-            uint sumbtint;
-            QString sumbttotal = QDateTime::currentDateTime().toString("dd");
-            QBluetoothLocalDevice::Pairing pairingStatus = localDevice->pairingStatus(discoveryAgent->discoveredDevices().at(i).address());
-            if (pairingStatus == QBluetoothLocalDevice::Unpaired)
-            {
-                for ( int j =3 ; j < 16; j = j + 3 ) {
-                    mybt = localDevice->address().toString().mid(j,1);
-                    // https://forum.qt.io/topic/31737/solved-convert-ascii-hex-to-int
-                    bool bStatus = false;
-                    mybtint = mybt.toUInt(&bStatus,16);
-                    yourbt = QString("%1").arg(discoveryAgent->discoveredDevices().at(i).address().toString()).mid(j,1);
-                    yourbtint = yourbt.toUInt(&bStatus,16);
-                    sumbtint = mybtint + yourbtint;
-                    // https://doc.qt.io/qt-5/qstring.html#arg
-                    // https://forum.qt.io/topic/28890/convert-from-int-to-hex/8
-                    sumbt = QString("%1").arg(sumbtint, 2, 16, QLatin1Char( '0' ));
-                    sumbttotal = sumbttotal + ":" + sumbt ;
+        //qDebug() << "Device" << discoveryAgent->discoveredDevices().at(i).address() << discoveryAgent->discoveredDevices().at(i).rssi() << discoveryAgent->discoveredDevices().at(i).majorDeviceClass();
+        QBluetoothDeviceInfo::MajorDeviceClass dev_cla =  discoveryAgent->discoveredDevices().at(i).majorDeviceClass();
+        if (dev_cla == QBluetoothDeviceInfo::PhoneDevice || dev_cla == QBluetoothDeviceInfo::MiscellaneousDevice || dev_cla == QBluetoothDeviceInfo::UncategorizedDevice){
+            if (discoveryAgent->discoveredDevices().at(i).rssi() < 0 && discoveryAgent->discoveredDevices().at(i).rssi() > -80){
+                QString mybt;
+                uint mybtint;
+                QString yourbt;
+                uint yourbtint;
+                QString sumbt = QDateTime::currentDateTime().toString("dd") +":";
+                uint sumbtint;
+                QString sumbttotal = QDateTime::currentDateTime().toString("dd");
+                QBluetoothLocalDevice::Pairing pairingStatus = localDevice->pairingStatus(discoveryAgent->discoveredDevices().at(i).address());
+                if (pairingStatus == QBluetoothLocalDevice::Unpaired)
+                {
+                    for ( int j =3 ; j < 16; j = j + 3 ) {
+                        mybt = localDevice->address().toString().mid(j,1);
+                        // https://forum.qt.io/topic/31737/solved-convert-ascii-hex-to-int
+                        bool bStatus = false;
+                        mybtint = mybt.toUInt(&bStatus,16);
+                        yourbt = QString("%1").arg(discoveryAgent->discoveredDevices().at(i).address().toString()).mid(j,1);
+                        yourbtint = yourbt.toUInt(&bStatus,16);
+                        sumbtint = mybtint + yourbtint;
+                        // https://doc.qt.io/qt-5/qstring.html#arg
+                        // https://forum.qt.io/topic/28890/convert-from-int-to-hex/8
+                        sumbt = QString("%1").arg(sumbtint, 2, 16, QLatin1Char( '0' ));
+                        sumbttotal = sumbttotal + ":" + sumbt ;
+                    }
+
+                    //qDebug() << "Phone" << discoveryAgent->discoveredDevices().at(i).address() << discoveryAgent->discoveredDevices().at(i).rssi() << sumbttotal;
+                    myBtDevice = sumbttotal;
+                    btDeviceChanged(myBtDevice);
                 }
 
-                //qDebug() << "Phone" << discoveryAgent->discoveredDevices().at(i).address() << discoveryAgent->discoveredDevices().at(i).rssi() << sumbttotal;
-                myBtDevice = sumbttotal;
-                btDeviceChanged(myBtDevice);
             }
-
         }
     }
 }

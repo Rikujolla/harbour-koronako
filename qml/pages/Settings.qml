@@ -73,61 +73,74 @@ Page {
 
 
             Row {
-                    TextField {
-                        id: iipee
-                        text: serverAddress
-                        placeholderText: qsTr("IP address")
-                        label: qsTr("IP address")
-                        width: page.width*3/4
-                        inputMethodHints: Qt.ImhNoPredictiveText
-                        EnterKey.iconSource: "image://theme/icon-m-enter-close"
-                        EnterKey.onClicked: {
-                            koronaClient.sipadd = text;
-                            serverAddress = text;
-                            Mydb.saveSettings(0);
-                            focus = false;
-                        }
-                    }
-
-                    IconButton {
-                        visible: iipee.text != ""
-                        icon.source: "image://theme/icon-m-clear?" + (pressed
-                                                                      ? Theme.highlightColor
-                                                                      : Theme.primaryColor)
-                        onClicked: {
-                            iipee.text = ""
-                            Mydb.saveSettings(0);
-                        }
+                TextField {
+                    id: iipee
+                    text: serverAddress
+                    placeholderText: qsTr("IP address")
+                    label: qsTr("IP address")
+                    width: page.width*3/4
+                    inputMethodHints: Qt.ImhNoPredictiveText
+                    EnterKey.iconSource: "image://theme/icon-m-enter-close"
+                    EnterKey.onClicked: {
+                        koronaClient.sipadd = text;
+                        serverAddress = text;
+                        Mydb.saveSettings(0);
+                        focus = false;
                     }
                 }
 
-                    Row {
-                        TextField {
-                            id: portti
-                            text: serverPort
-                            placeholderText: qsTr("Port number")
-                            label: qsTr("Port number")
-                            width: page.width*3/4
-                            inputMethodHints: Qt.ImhDigitsOnly
-                            EnterKey.iconSource: "image://theme/icon-m-enter-close"
-                            EnterKey.onClicked: {
-                                koronaClient.sport = text
-                                serverPort = text;
-                                Mydb.saveSettings(0);
-                                focus = false;
-                            }
-                        }
-
-                        IconButton {
-                            visible: portti.text != ""
-                            icon.source: "image://theme/icon-m-clear?" + (pressed
-                                                                          ? Theme.highlightColor
-                                                                          : Theme.primaryColor)
-                            onClicked: portti.text = ""
-                        }
+                IconButton {
+                    visible: iipee.text != ""
+                    icon.source: "image://theme/icon-m-clear?" + (pressed
+                                                                  ? Theme.highlightColor
+                                                                  : Theme.primaryColor)
+                    onClicked: {
+                        iipee.text = ""
+                        Mydb.saveSettings(0);
                     }
+                }
+            }
 
+            Row {
+                TextField {
+                    id: portti
+                    text: serverPort
+                    placeholderText: qsTr("Port number")
+                    label: qsTr("Port number")
+                    width: page.width*3/4
+                    inputMethodHints: Qt.ImhDigitsOnly
+                    EnterKey.iconSource: "image://theme/icon-m-enter-close"
+                    EnterKey.onClicked: {
+                        koronaClient.sport = text
+                        serverPort = text;
+                        Mydb.saveSettings(0);
+                        focus = false;
+                    }
+                }
 
+                IconButton {
+                    visible: portti.text != ""
+                    icon.source: "image://theme/icon-m-clear?" + (pressed
+                                                                  ? Theme.highlightColor
+                                                                  : Theme.primaryColor)
+                    onClicked: portti.text = ""
+                }
+            }
+
+            Button {
+                text:qsTr("Use test server")
+                anchors.horizontalCenter: parent.horizontalCenter
+                onClicked: {
+                    serverPort = "9011";
+                    koronaClient.sport = serverPort;
+                    portti.text = serverPort;
+                    serverAddress = "77.240.23.45";
+                    koronaClient.sipadd = serverAddress;
+                    iipee.text = serverAddress;
+                    Mydb.saveSettings(0);
+                }
+            }
+/*
             SectionHeader { text: qsTr("Other settings") }
             Text {
                 font.pixelSize: Theme.fontSizeSmall
@@ -143,10 +156,10 @@ Page {
                     qsTr("Timer settings etc")
                 }
             }
-
+*/
             Koronaclient {
                 id: koronaClient
-                onKorodataChanged:  console.log(korodata, "test")
+                onKorodataChanged:  {}
             }
 
 

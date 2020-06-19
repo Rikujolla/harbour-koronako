@@ -7,8 +7,8 @@ ApplicationWindow
     initialPage: Component { MainPage { } }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations: defaultAllowedOrientations
-
-    property string version : "0.0.9"
+    ///Commonstart
+    property string version : "0.1.0"
     property string covidStartDate : "" // Start date for my corona
     property string covidEndDate : "" // End date for my corona
     property int minHits : 15 // minimum amount of hits to give exposure, related to discoveryTimer
@@ -17,4 +17,5 @@ ApplicationWindow
     property int serverPort: 32661 // Default server port
     property string lastUsed : "" // To be utilized later to remove old data if the ap has been used seldom
     property int coronaExposureSince : -1 // Days from last corona exposure
+    ///Commonend
 }

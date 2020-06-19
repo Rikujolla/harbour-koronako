@@ -211,11 +211,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Other settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Timer settings etc</source>
+        <source>Use test server</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

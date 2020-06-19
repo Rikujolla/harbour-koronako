@@ -55,7 +55,7 @@
 #include "client.h"
 
 Client::Client()
-    : tcpSocket(new QTcpSocket(this))
+    : tcpSocket(new QSslSocket(this))
     , networkSession(Q_NULLPTR)
 {}
 
@@ -132,15 +132,23 @@ void Client::startClient()
 
 void Client::exchangeDataWithServer(QString _toTcp)
 {
+    //qDebug() << "Device supports OpenSSL: " << QSslSocket::supportsSsl();
     QString pairData = "";
     //qDebug() << _toTcp << "TCP";
     pairData = myExpdata;
 
-    tcpSocket->connectToHost(mySipadd,mySport);
+    tcpSocket->setProtocol(QSsl::TlsV1_0);
 
-    if (tcpSocket->waitForConnected(5000)) {
-        qDebug("Connected!");
+    tcpSocket->connectToHostEncrypted(mySipadd,mySport);
+    tcpSocket->ignoreSslErrors();
 
+    if (tcpSocket->waitForEncrypted(5000)) {
+        //qDebug() << "Crypted!" << tcpSocket->errorString() << tcpSocket->sslErrors().length();
+        const QSslCipher cipher = tcpSocket->sessionCipher();
+        const QString cipherInfo = QString("%1, %2 (%3/%4)").arg(cipher.authenticationMethod())
+                                           .arg(cipher.name()).arg(cipher.usedBits())
+                                           .arg(cipher.supportedBits());;
+        //qDebug() << cipherInfo;
         int values = 1;
         while (values > 0) {
             std::string temp = pairData.toStdString();
@@ -155,49 +163,49 @@ void Client::exchangeDataWithServer(QString _toTcp)
         }
 
         if(tcpSocket->waitForReadyRead()){
-        //qDebug() << "Reading: " << tcpSocket->bytesAvailable();
+            //qDebug() << "Reading: " << tcpSocket->bytesAvailable();
 
-        QByteArray temp2 = tcpSocket->readAll();
-        QString nextFortune = QString::fromStdString(temp2.toStdString());
-        if (nextFortune.left(10) == "EXPOSUREDD"){
-            myMsg = 2; // Exposure message
-            msgChanged(myMsg);
-            myMsg2 = nextFortune.right(2).toInt();
-            msg2Changed(myMsg2);
-            //qDebug() << "Server answers: " << nextFortune << myMsg << myMsg2;
-        }
-        else if (nextFortune.left(10) == "NOEXPOSURE"){
-            //qDebug() << "Server answers: " << nextFortune;
-            myMsg = 3; // Noexposure message
-            msgChanged(myMsg);
-        }
-        else if (nextFortune.left(10) == "SENTCOVIDD") {
-            //qDebug() << "Server answers: " << nextFortune;
-            myMsg = 4; // Sent data message
-            msgChanged(myMsg);
-        }
-        else if (nextFortune.left(10) == "ERRORERROR") {
-            //qDebug() << "Server answers error: " << nextFortune;
-            myMsg = 5; // Error message
-            msgChanged(myMsg);
-        }
-        else {
-            //qDebug() << "Server answers error: " << nextFortune;
-            myMsg = 6; // Error message
-            msgChanged(myMsg);
-        }
-        tcpSocket->disconnectFromHost();
+            QByteArray temp2 = tcpSocket->readAll();
+            QString nextFortune = QString::fromStdString(temp2.toStdString());
+            if (nextFortune.left(10) == "EXPOSUREDD"){
+                myMsg = 2; // Exposure message
+                msgChanged(myMsg);
+                myMsg2 = nextFortune.right(2).toInt();
+                msg2Changed(myMsg2);
+                //qDebug() << "Server answers: " << nextFortune << myMsg << myMsg2;
+            }
+            else if (nextFortune.left(10) == "NOEXPOSURE"){
+                //qDebug() << "Server answers: " << nextFortune;
+                myMsg = 3; // Noexposure message
+                msgChanged(myMsg);
+            }
+            else if (nextFortune.left(10) == "SENTCOVIDD") {
+                //qDebug() << "Server answers: " << nextFortune;
+                myMsg = 4; // Sent data message
+                msgChanged(myMsg);
+            }
+            else if (nextFortune.left(10) == "ERRORERROR") {
+                //qDebug() << "Server answers error: " << nextFortune;
+                myMsg = 5; // Error message
+                msgChanged(myMsg);
+            }
+            else {
+                //qDebug() << "Server answers error: " << nextFortune;
+                myMsg = 6; // Error message
+                msgChanged(myMsg);
+            }
+            tcpSocket->disconnectFromHost();
         }
         else {
             tcpSocket->abort();
-            //qDebug("Data could not be read");
+            qDebug("Data could not be read");
         }
     }
     else {
         tcpSocket->abort();
         myMsg = 1; // No connection message
         msgChanged(myMsg);
-        //qDebug("Not connected!");
+        qDebug("Not connected!");
     }
 }
 

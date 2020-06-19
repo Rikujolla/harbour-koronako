@@ -53,10 +53,6 @@
         <translation>Ohjelman ideana on skannata bluetooth-puhelimia, jotta voidaan määrittää altistuminen koronavirukselle.</translation>
     </message>
     <message>
-        <source> In addition of the app a proper server application should be developed.</source>
-        <translation>Kesken</translation>
-    </message>
-    <message>
         <source>The basic idea to maintain your and others privacy is a symmetric bluetooth address mix of the devices.</source>
         <translation>Yksityisyyden säilyttämisen perusidea on sekoittaa symmetrisesti havaitsijan ja havaitun puhelimen bluetooth-osoitteen osia.</translation>
     </message>
@@ -75,6 +71,10 @@
     <message>
         <source>Copyright (c) 2020, Riku Lahtinen</source>
         <translation>Copyright (c) 2020, Riku Lahtinen</translation>
+    </message>
+    <message>
+        <source> In addition of the app a proper server application (koronako-server) is needed.</source>
+        <translation>Lisäksi tarvitaan palvelinsovellus (koronako-server)</translation>
     </message>
 </context>
 <context>
@@ -152,10 +152,6 @@
         <translation>Korona-tiedot lähetetty!</translation>
     </message>
     <message>
-        <source>Error!</source>
-        <translatio>Virhe!</translation>
-    </message>
-    <message>
         <source>Exposure status: </source>
         <translation>Altistumistilanne: </translation>
     </message>
@@ -183,6 +179,14 @@
         <source>Today</source>
         <translation>Tänään</translation>
     </message>
+    <message>
+        <source>Wrong app version!</source>
+        <translation>Väärä sovellusversio!</translation>
+    </message>
+    <message>
+        <source>Other error!</source>
+        <translation>Muu virhe!</translation>
+    </message>
 </context>
 <context>
     <name>Settings</name>
@@ -207,12 +211,8 @@
         <translation>Porttinumero</translation>
     </message>
     <message>
-        <source>Other settings</source>
-        <translation>Muut asetukset</translation>
-    </message>
-    <message>
-        <source>Timer settings etc</source>
-        <translation>Ajastinasetukset etc</translation>
+        <source>Use test server</source>
+        <translation>Käytä testipalvelinta</translation>
     </message>
 </context>
 </TS>

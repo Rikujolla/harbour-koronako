@@ -247,7 +247,7 @@ function readMyKorona() {
                     var he
                     //console.log(((new Date()-new Date(covidEndDate))/24/3600/1000))
                     if (((new Date()-new Date(covidEndDate))/24/3600/1000)>25) {
-                        console.log("No data to be sent")
+                        //console.log("No data to be sent")
                     }
                     else if (((new Date()-new Date(covidStartDate))/24/3600/1000)>25){
                         if (new Date().getDate()>25){
@@ -261,7 +261,7 @@ function readMyKorona() {
                         }
 
                         he = new Date(covidEndDate).getDate()
-                        console.log("Only enddata affecting", ls, le, hs, he)
+                        //console.log("Only enddata affecting", ls, le, hs, he)
                     }
                     else if(new Date(covidStartDate).getMonth() != new Date(covidEndDate).getMonth()){
                         ls = new Date(covidStartDate).getDate()
@@ -307,7 +307,7 @@ function removeMyKorona() {
                     var he
                     //console.log(((new Date()-new Date(covidEndDate))/24/3600/1000))
                     if (((new Date()-new Date(covidEndDate))/24/3600/1000)>25) {
-                        console.log("No data to be sent")
+                        //console.log("No data to be sent")
                     }
                     else if (((new Date()-new Date(covidStartDate))/24/3600/1000)>25){
                         if (new Date().getDate()>25){
@@ -321,7 +321,7 @@ function removeMyKorona() {
                         }
 
                         he = new Date(covidEndDate).getDate()
-                        console.log("Only enddata affecting", ls, le, hs, he)
+                        //console.log("Only enddata affecting", ls, le, hs, he)
                     }
                     else if(new Date(covidStartDate).getMonth() != new Date(covidEndDate).getMonth()){
                         ls = new Date(covidStartDate).getDate()

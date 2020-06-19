@@ -290,7 +290,6 @@ Page {
 
     Timer{
         interval: discoveryTimer
-        //interval: 20000 //for testing
         running: true
         repeat: true
         onTriggered: {
@@ -318,7 +317,7 @@ Page {
 
     Koronaclient {
         id: koronaClient
-        onKorodataChanged:  console.log(korodata, "test")
+        onKorodataChanged:  {}
         onMsgChanged: {
             switch (msg) {
             case 1: // No connection to server
