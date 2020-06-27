@@ -128,10 +128,10 @@ Page {
             }
 
             Button {
-                text:qsTr("Use test server")
+                text:qsTr("Use common server")
                 anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: {
-                    serverPort = "9011";
+                    serverPort = "4243";
                     koronaClient.sport = serverPort;
                     portti.text = serverPort;
                     serverAddress = "77.240.23.45";

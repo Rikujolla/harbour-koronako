@@ -89,7 +89,8 @@ void Device::scanFinished()
     for (int i=0 ; i < discoveryAgent->discoveredDevices().count();i++){
         //qDebug() << "Device" << discoveryAgent->discoveredDevices().at(i).address() << discoveryAgent->discoveredDevices().at(i).rssi() << discoveryAgent->discoveredDevices().at(i).majorDeviceClass();
         QBluetoothDeviceInfo::MajorDeviceClass dev_cla =  discoveryAgent->discoveredDevices().at(i).majorDeviceClass();
-        if (dev_cla == QBluetoothDeviceInfo::PhoneDevice || dev_cla == QBluetoothDeviceInfo::MiscellaneousDevice || dev_cla == QBluetoothDeviceInfo::UncategorizedDevice){
+        if (dev_cla == QBluetoothDeviceInfo::PhoneDevice){
+            //if (dev_cla == QBluetoothDeviceInfo::PhoneDevice || dev_cla == QBluetoothDeviceInfo::MiscellaneousDevice || dev_cla == QBluetoothDeviceInfo::UncategorizedDevice){
             if (discoveryAgent->discoveredDevices().at(i).rssi() < 0 && discoveryAgent->discoveredDevices().at(i).rssi() > -80){
                 QString mybt;
                 uint mybtint;
@@ -125,35 +126,18 @@ void Device::scanFinished()
     }
 }
 
-void Device::setGeneralUnlimited(bool unlimited)
+void Device::setDiscoverable()
 {
-    if (unlimited)
-        discoveryAgent->setInquiryType(QBluetoothDeviceDiscoveryAgent::GeneralUnlimitedInquiry);
+    if (localDevice->hostMode() != QBluetoothLocalDevice::HostDiscoverable) {
+        //localDevice->setHostMode(QBluetoothLocalDevice::HostDiscoverable);
+        qDebug() << "Device not discoverable" << localDevice->hostMode();
+    }
     else
-        discoveryAgent->setInquiryType(QBluetoothDeviceDiscoveryAgent::LimitedInquiry);
-}
-
-void Device::on_discoverable_clicked(bool clicked)
-{
-    if (clicked)
-        localDevice->setHostMode(QBluetoothLocalDevice::HostDiscoverable);
-    else
-        localDevice->setHostMode(QBluetoothLocalDevice::HostConnectable);
+    {
+        qDebug("Device was discoverable");
+    }
 }
 
 void Device::hostModeStateChanged(QBluetoothLocalDevice::HostMode mode)
 {
-    if (mode != QBluetoothLocalDevice::HostPoweredOff)
-        ;
-    else
-        //timer.stop();
-
-        if (mode == QBluetoothLocalDevice::HostDiscoverable)
-            //ui->discoverable->setChecked(true)
-            ;
-        else
-            //ui->discoverable->setChecked(false);
-
-            bool on = !(mode == QBluetoothLocalDevice::HostPoweredOff);
-
 }

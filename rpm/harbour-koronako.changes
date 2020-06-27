@@ -11,6 +11,10 @@
 
 # * date Author's Name <author's email> version-release
 # - Summary of changes
+* Fri Jun 19 2020 Riku Lahtinen <rikul.lajolla@kiu.as> 0.1.1-1
+- Bluetooth checks??
+- Better version handling with server
+
 * Fri Jun 19 2020 Riku Lahtinen <rikul.lajolla@kiu.as> 0.1.0-1
 - Support for common test server
 - SSL-support added for the data transfer to the server

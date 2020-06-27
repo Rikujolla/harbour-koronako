@@ -211,7 +211,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Use test server</source>
+        <source>Use common server</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

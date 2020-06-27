@@ -72,6 +72,7 @@ public:
     Device(QObject *parent = 0);
     ~Device();
     Q_INVOKABLE void startScan();
+    Q_INVOKABLE void setDiscoverable();
     QString btDevice(){return myBtDevice;}
     void setBtDevice(QString te11){
         myBtDevice = te11;
@@ -87,11 +88,8 @@ signals:
     void btDeviceChanged(QString te11);
     void ctimeChanged(int te14);
 
-public slots:
-    void on_discoverable_clicked(bool clicked);
 private slots:
     void scanFinished();
-    void setGeneralUnlimited(bool unlimited);
     void hostModeStateChanged(QBluetoothLocalDevice::HostMode);
 private:
     QBluetoothDeviceDiscoveryAgent *discoveryAgent;

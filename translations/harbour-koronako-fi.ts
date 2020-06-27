@@ -211,8 +211,8 @@
         <translation>Porttinumero</translation>
     </message>
     <message>
-        <source>Use test server</source>
-        <translation>Käytä testipalvelinta</translation>
+        <source>Use common server</source>
+        <translation>Käytä yhteistä palvelinta</translation>
     </message>
 </context>
 </TS>
