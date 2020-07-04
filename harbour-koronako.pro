@@ -14,6 +14,8 @@ TARGET = harbour-koronako
 
 CONFIG += sailfishapp
 
+CONFIG(release, debug|release):DEFINES += QT_NO_DEBUG_OUTPUT
+
 QT += bluetooth
 
 SOURCES += src/harbour-koronako.cpp \

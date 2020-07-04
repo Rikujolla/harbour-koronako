@@ -187,6 +187,10 @@
         <source>Other error!</source>
         <translation>Muu virhe!</translation>
     </message>
+    <message>
+        <source>Show data</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Settings</name>
@@ -213,6 +217,45 @@
     <message>
         <source>Use common server</source>
         <translation>Käytä yhteistä palvelinta</translation>
+    </message>
+    <message>
+        <source>If you end to this page when starting the app, check the settings are OK.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phone name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The phone name is &apos;%1&apos;. The app will utilize last seven characters of the phone name. If the phone name is too short or too general, the app will not work. Change name from the device settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name length: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unique name: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ShowData</name>
+    <message>
+        <source>Data page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Data</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

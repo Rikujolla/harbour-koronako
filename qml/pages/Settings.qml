@@ -28,6 +28,7 @@ import Sailfish.Silica 1.0
 import QtQuick.LocalStorage 2.0
 import "./databases.js" as Mydb
 import harbour.koronako.koronaclient 1.0
+import harbour.koronako.koronascan 1.0
 
 
 Page {
@@ -53,6 +54,21 @@ Page {
             spacing: Theme.paddingLarge
             PageHeader {
                 title: qsTr("Settings page")
+            }
+
+            Text {
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.primaryColor
+                wrapMode: Text.WordWrap
+                width: parent.width
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    margins: Theme.paddingLarge
+                }
+                text: {
+                    qsTr("If you end to this page when starting the app, check the settings are OK.")
+                }
             }
 
             SectionHeader { text: qsTr("Server settings") }
@@ -140,8 +156,9 @@ Page {
                     Mydb.saveSettings(0);
                 }
             }
-/*
-            SectionHeader { text: qsTr("Other settings") }
+
+            SectionHeader { text: qsTr("Phone name") }
+
             Text {
                 font.pixelSize: Theme.fontSizeSmall
                 color: Theme.primaryColor
@@ -153,16 +170,72 @@ Page {
                     margins: Theme.paddingLarge
                 }
                 text: {
-                    qsTr("Timer settings etc")
+                    qsTr("The phone name is '%1'. The app will utilize last seven characters of the phone name. If the phone name is too short or too general, the app will not work. Change name from the device settings.").arg(koronaScan.ownDevice)
                 }
             }
-*/
+
+            Text {
+                id: nameLength
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.primaryColor
+                wrapMode: Text.WordWrap
+                width: parent.width
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    margins: Theme.paddingLarge
+                }
+                text: {""}
+            }
+            Text {
+                id: nameUnique
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.primaryColor
+                wrapMode: Text.WordWrap
+                width: parent.width
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    margins: Theme.paddingLarge
+                }
+                text: {""}
+            }
+
             Koronaclient {
                 id: koronaClient
                 onKorodataChanged:  {}
             }
 
+            Koronascan {
+                id: koronaScan
+            }
 
         }
+    }
+    Component.onCompleted: {
+        koronaScan.getName()
+        checkName()
+    }
+
+    function checkName(){
+        var _name = koronaScan.ownDevice
+        var _discoveryRunning = true
+        var _nameUnique = qsTr("OK")
+        for (var i=0;i<names.length;i++){
+            if (developer){console.log(names[i])}
+            if (_name === names[i]){
+                _discoveryRunning = false
+                _nameUnique = qsTr("Not OK")
+            }
+        }
+        if (_name.length < 7) {
+            var _nameLength = qsTr("Not OK")
+            _discoveryRunning = false
+        }
+        else {_nameLength = qsTr("OK")}
+        nameLength.text = qsTr("Name length: %1").arg(_nameLength)
+        nameUnique.text = qsTr("Unique name: %1").arg(_nameUnique)
+        discoveryRunning = _discoveryRunning
+        Mydb.saveSettings(0);
     }
 }

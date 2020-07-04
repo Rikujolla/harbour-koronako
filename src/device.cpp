@@ -85,42 +85,39 @@ void Device::startScan()
 
 void Device::scanFinished()
 {
-    //qDebug() << "Finished" << discoveryAgent->discoveredDevices().count() ;
     for (int i=0 ; i < discoveryAgent->discoveredDevices().count();i++){
-        //qDebug() << "Device" << discoveryAgent->discoveredDevices().at(i).address() << discoveryAgent->discoveredDevices().at(i).rssi() << discoveryAgent->discoveredDevices().at(i).majorDeviceClass();
         QBluetoothDeviceInfo::MajorDeviceClass dev_cla =  discoveryAgent->discoveredDevices().at(i).majorDeviceClass();
+        qint16 dev_rssi = discoveryAgent->discoveredDevices().at(i).rssi();
+        int own_name_len = localDevice->name().length();
+        QString dev_name = discoveryAgent->discoveredDevices().at(i).name();
+        int dev_name_len = discoveryAgent->discoveredDevices().at(i).name().length();
         if (dev_cla == QBluetoothDeviceInfo::PhoneDevice){
-            //if (dev_cla == QBluetoothDeviceInfo::PhoneDevice || dev_cla == QBluetoothDeviceInfo::MiscellaneousDevice || dev_cla == QBluetoothDeviceInfo::UncategorizedDevice){
-            if (discoveryAgent->discoveredDevices().at(i).rssi() < 0 && discoveryAgent->discoveredDevices().at(i).rssi() > -80){
-                QString mybt;
+            qDebug() << "Own/other device" << localDevice->address()<< localDevice->name() << discoveryAgent->discoveredDevices().at(i).address() << discoveryAgent->discoveredDevices().at(i).name()<< discoveryAgent->discoveredDevices().at(i).rssi();
+            if (dev_rssi < 0 && dev_rssi > -80 && own_name_len > 7 && dev_name_len > 7 && !isInList(dev_name)){
+                QString mybt = localDevice->name().right(7);
                 uint mybtint;
-                QString yourbt;
+                QString yourbt = discoveryAgent->discoveredDevices().at(i).name().right(7);
                 uint yourbtint;
-                QString sumbt = QDateTime::currentDateTime().toString("dd") +":";
+                QString sumbt;
                 uint sumbtint;
-                QString sumbttotal = QDateTime::currentDateTime().toString("dd");
+                QString sumbttotal = QDateTime::currentDateTime().toString("dd") + ":";
                 QBluetoothLocalDevice::Pairing pairingStatus = localDevice->pairingStatus(discoveryAgent->discoveredDevices().at(i).address());
                 if (pairingStatus == QBluetoothLocalDevice::Unpaired)
                 {
-                    for ( int j =3 ; j < 16; j = j + 3 ) {
-                        mybt = localDevice->address().toString().mid(j,1);
-                        // https://forum.qt.io/topic/31737/solved-convert-ascii-hex-to-int
-                        bool bStatus = false;
-                        mybtint = mybt.toUInt(&bStatus,16);
-                        yourbt = QString("%1").arg(discoveryAgent->discoveredDevices().at(i).address().toString()).mid(j,1);
-                        yourbtint = yourbt.toUInt(&bStatus,16);
-                        sumbtint = mybtint + yourbtint;
+                    for ( int j =0 ; j < 7; j = j + 1 ) {
+                        mybtint = mybt.at(j).toLatin1();
+                        yourbtint = yourbt.at(j).toLatin1();
+                        sumbtint = (mybtint + yourbtint)/2;
                         // https://doc.qt.io/qt-5/qstring.html#arg
                         // https://forum.qt.io/topic/28890/convert-from-int-to-hex/8
                         sumbt = QString("%1").arg(sumbtint, 2, 16, QLatin1Char( '0' ));
-                        sumbttotal = sumbttotal + ":" + sumbt ;
+                        if (sumbt.length() < 2) {sumbt = ":" + sumbt;}
+                        sumbttotal = sumbttotal + sumbt ;
                     }
-
-                    //qDebug() << "Phone" << discoveryAgent->discoveredDevices().at(i).address() << discoveryAgent->discoveredDevices().at(i).rssi() << sumbttotal;
+                    qDebug() << "Phone" << discoveryAgent->discoveredDevices().at(i).name() << dev_rssi << sumbttotal;
                     myBtDevice = sumbttotal;
                     btDeviceChanged(myBtDevice);
                 }
-
             }
         }
     }
@@ -138,6 +135,27 @@ void Device::setDiscoverable()
     }
 }
 
+void Device::getName()
+{
+    myOwnDevice = localDevice->name();
+    ownDeviceChanged(myOwnDevice);
+}
+
 void Device::hostModeStateChanged(QBluetoothLocalDevice::HostMode mode)
 {
+}
+
+bool Device::isInList(QString _phone)
+{
+    bool ret = false;
+    QList<QString> phonelist = {
+        "Nokia 3",
+        "Nokia 4.2",
+        "Nokia 5",
+        "Nokia 6"
+    };
+    for (int i=0 ; i < phonelist.size();i++){
+        if (phonelist.at(i) == _phone){ ret = true;}
+    }
+    return ret;
 }

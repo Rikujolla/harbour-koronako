@@ -29,6 +29,11 @@ Page {
                 onClicked: pageStack.push(Qt.resolvedUrl("About.qml"))
             }
             MenuItem {
+                visible: developer
+                text: qsTr("Show data")
+                onClicked: pageStack.push(Qt.resolvedUrl("ShowData.qml"))
+            }
+            MenuItem {
                 text: qsTr("Settings")
                 onClicked: pageStack.push(Qt.resolvedUrl("Settings.qml"))
             }
@@ -290,7 +295,7 @@ Page {
 
     Timer{
         interval: discoveryTimer
-        running: true
+        running: discoveryRunning
         repeat: true
         onTriggered: {
             koronaScan.setDiscoverable();
@@ -298,6 +303,7 @@ Page {
             koronaScan.startScan();
         }
     }
+
 
     ListModel {
         id: koronaList
@@ -414,6 +420,16 @@ Page {
         return current_date
     }
 
+    Timer {
+        id: delay
+        interval: 160
+        running: false
+        repeat: false
+        onTriggered: {
+            if (!discoveryRunning || serverAddress==""){pageStack.push(Qt.resolvedUrl("Settings.qml"))}
+        }
+    }
+
     Component.onCompleted: {
         Mydb.findHits(current_day());
         koronaScan.ctime = discoveryTimer;
@@ -422,5 +438,6 @@ Page {
         covidStartDate != "" ? koronaStart.text = new Date(covidStartDate).toLocaleDateString(Qt.locale(),Locale.ShortFormat) : koronaStart.text = qsTr("Start date")
         covidEndDate != "" ? koronaEnd.text = new Date(covidEndDate).toLocaleDateString(Qt.locale(),Locale.ShortFormat) : koronaEnd.text = qsTr("End date")
         koronaScan.setDiscoverable();
+        if (!discoveryRunning || serverAddress==""){delay.start()}
     }
 }
