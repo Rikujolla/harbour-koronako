@@ -66,17 +66,30 @@ class Device : public QObject
 
     //Q_PROPERTY(QVariantList bluetoothDeviceList READ bluetoothDeviceList)
     Q_PROPERTY(QString btDevice READ btDevice WRITE setBtDevice NOTIFY btDeviceChanged)
+    Q_PROPERTY(QString ownDevice READ ownDevice WRITE setOwnDevice NOTIFY ownDeviceChanged)
+    Q_PROPERTY(bool btVisible READ btVisible WRITE setBtVisible NOTIFY btVisibleChanged)
     Q_PROPERTY(int ctime READ ctime WRITE setCtime NOTIFY ctimeChanged) // DiscoveryTimer
 
 public:
     Device(QObject *parent = 0);
     ~Device();
     Q_INVOKABLE void startScan();
-    Q_INVOKABLE void setDiscoverable();
+    Q_INVOKABLE bool setDiscoverable();
+    Q_INVOKABLE bool getName();
     QString btDevice(){return myBtDevice;}
     void setBtDevice(QString te11){
         myBtDevice = te11;
         btDeviceChanged(myBtDevice);
+    }
+    QString ownDevice(){return myOwnDevice;}
+    void setOwnDevice(QString te15){
+        myOwnDevice = te15;
+        ownDeviceChanged(myOwnDevice);
+    }
+    bool btVisible(){return myBtVisible;}
+    void setBtVisible(bool te16){
+        myBtVisible = te16;
+        btVisibleChanged(myBtVisible);
     }
     int ctime(){return dTimer;}
     void setCtime(int te14){
@@ -86,15 +99,20 @@ public:
 
 signals:
     void btDeviceChanged(QString te11);
+    void ownDeviceChanged(QString te15);
+    void btVisibleChanged(bool te16);
     void ctimeChanged(int te14);
 
 private slots:
     void scanFinished();
     void hostModeStateChanged(QBluetoothLocalDevice::HostMode);
 private:
+    bool isInList(QString aphone);
     QBluetoothDeviceDiscoveryAgent *discoveryAgent;
     QBluetoothLocalDevice *localDevice;
     QString myBtDevice;
+    QString myOwnDevice;
+    bool myBtVisible;
     QTimer timer;
     int dTimer;
 };

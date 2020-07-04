@@ -53,18 +53,6 @@
         <translation>Ohjelman ideana on skannata bluetooth-puhelimia, jotta voidaan määrittää altistuminen koronavirukselle.</translation>
     </message>
     <message>
-        <source>The basic idea to maintain your and others privacy is a symmetric bluetooth address mix of the devices.</source>
-        <translation>Yksityisyyden säilyttämisen perusidea on sekoittaa symmetrisesti havaitsijan ja havaitun puhelimen bluetooth-osoitteen osia.</translation>
-    </message>
-    <message>
-        <source> Because only part of the address is used false alarms are possible occasionally.</source>
-        <translation> Koska vain osaa osoitteesta käytetään satunnaiset virhehälytykset ovat mahdollisia.</translation>
-    </message>
-    <message>
-        <source>Only mixed bluetooth address and a month day number is saved to the database preventing data hacking later.</source>
-        <translation>Vain sekoitettu bluetooth-osoite ja kuukauden päivä tallennetaan, mikä estää osoitteiden selvittämisen jälkikäteen.</translation>
-    </message>
-    <message>
         <source> Nor more than one month data can be saved.</source>
         <translation> Lisäksi vain yhden kuukauden data voidaan tallentaa.</translation>
     </message>
@@ -74,7 +62,23 @@
     </message>
     <message>
         <source> In addition of the app a proper server application (koronako-server) is needed.</source>
-        <translation>Lisäksi tarvitaan palvelinsovellus (koronako-server)</translation>
+        <translation> Lisäksi tarvitaan palvelinsovellus (koronako-server)</translation>
+    </message>
+    <message>
+        <source>The basic idea to maintain your and others privacy is a symmetric device name mix of the devices.</source>
+        <translation>Perusideana sinun ja muiden yksityisyyden säilyttämisessä on symmetrinen puhelimien nimien sekoitus.</translation>
+    </message>
+    <message>
+        <source> Because only part of the device name is used false alarms are possible occasionally.</source>
+        <translation> Koska vain osaa puhelimen nimestä käytetään, satunnaisesti voi tulla virheellisiä altistumisia.</translation>
+    </message>
+    <message>
+        <source>Only mixed device names and a month day number is saved to the database preventing data hacking later.</source>
+        <translation>Vain sekoitettu puhelimen nimi ja kuukaudenpäivä tallennetaan tietokantaan. Tämä estää tietojen selvittämisen jälkikäteen.</translation>
+    </message>
+    <message>
+        <source>Android device list from wikipedia.</source>
+        <translation>Android-puhelimien lista wikipediasta.</translation>
     </message>
 </context>
 <context>
@@ -169,7 +173,7 @@
     </message>
     <message>
         <source>Days from last corona exposure: %1</source>
-        <translation>Päiviä viimeisimmästä altistuksesta: </translation>
+        <translation>Päiviä viimeisimmästä altistuksesta: %1</translation>
     </message>
     <message>
         <source>Infection data sent to the server: %1</source>
@@ -186,6 +190,14 @@
     <message>
         <source>Other error!</source>
         <translation>Muu virhe!</translation>
+    </message>
+    <message>
+        <source>Show data</source>
+        <translation>Näytä tiedot</translation>
+    </message>
+    <message>
+        <source>Not known</source>
+        <translation>Ei tiedossa</translation>
     </message>
 </context>
 <context>
@@ -213,6 +225,37 @@
     <message>
         <source>Use common server</source>
         <translation>Käytä yhteistä palvelinta</translation>
+    </message>
+    <message>
+        <source>If you end to this page when starting the app, check the settings are OK.</source>
+        <translation>Jos sovellus kännistyy tälle sivulle, tarkista, että asetukset ovat kunnossa.</translation>
+    </message>
+    <message>
+        <source>Check bluetooth visibility</source>
+        <translation>Tarkista bluetoothin näkyvyys</translation>
+    </message>
+    <message>
+        <source>Phone name is not valid</source>
+        <translation>Puhelimen nimi ei ole kelvollinen</translation>
+    </message>
+    <message>
+        <source>The phone name is &apos;%1&apos;. The app will utilize last seven characters of the phone name. If the phone name is too short or too general, the app will not work. If you see this text, change the name from the device settings.</source>
+        <translation>Puhelimen nimi on &apos;%1&apos;. Sovellus käyttää nimen seitsemää viimeistä merkkiä hyödyksi. Jos puhelimen nimi on liian lyhyt tai yleinen, sovellus ei toimi. Jos näet tämän tekstin, muuta nimi puhelimen asetuksista.</translation>
+    </message>
+    <message>
+        <source>Set bluetooth on and visible from the phone settings. Restart the app.</source>
+        <translation>Aseta bluetooth päälle ja näkyväksi puhelimen asetuksista. Käynnistä sovellus uudelleen.</translation>
+    </message>
+</context>
+<context>
+    <name>ShowData</name>
+    <message>
+        <source>Data page</source>
+        <translation>Datasivu</translation>
+    </message>
+    <message>
+        <source>Data</source>
+        <translation>Data</translation>
     </message>
 </context>
 </TS>

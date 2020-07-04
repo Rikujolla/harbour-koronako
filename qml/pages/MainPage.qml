@@ -8,7 +8,7 @@ import "./databases.js" as Mydb
 Page {
     id: page
 
-    property var messages: [{mesg:""},
+    property var messages: [{mesg:qsTr("Not known")},
         {mesg:qsTr("Not connected to server!")},
         {mesg:qsTr("Exposured!")},
         {mesg:qsTr("No exposure!")},
@@ -27,6 +27,11 @@ Page {
             MenuItem {
                 text: qsTr("About")
                 onClicked: pageStack.push(Qt.resolvedUrl("About.qml"))
+            }
+            MenuItem {
+                visible: developer
+                text: qsTr("Show data")
+                onClicked: pageStack.push(Qt.resolvedUrl("ShowData.qml"))
             }
             MenuItem {
                 text: qsTr("Settings")
@@ -122,7 +127,7 @@ Page {
                     right: parent.right
                     margins: Theme.paddingLarge
                 }
-                text: qsTr("Exposures checked from server: %1").arg("NOT KNOWN")
+                text: qsTr("Exposures checked from server: %1").arg(messages[0].mesg)
             }
 
             Text {
@@ -251,7 +256,7 @@ Page {
                     right: parent.right
                     margins: Theme.paddingLarge
                 }
-                text: qsTr("Infection data sent to the server: %1").arg("NOT KNOWN")
+                text: qsTr("Infection data sent to the server: %1").arg(messages[0].mesg)
             }
 
 
@@ -290,7 +295,7 @@ Page {
 
     Timer{
         interval: discoveryTimer
-        running: true
+        running: discoveryRunning
         repeat: true
         onTriggered: {
             koronaScan.setDiscoverable();
@@ -298,6 +303,7 @@ Page {
             koronaScan.startScan();
         }
     }
+
 
     ListModel {
         id: koronaList
@@ -414,6 +420,16 @@ Page {
         return current_date
     }
 
+    Timer {
+        id: delay
+        interval: 160
+        running: false
+        repeat: false
+        onTriggered: {
+            pageStack.push(Qt.resolvedUrl("Settings.qml"))
+        }
+    }
+
     Component.onCompleted: {
         Mydb.findHits(current_day());
         koronaScan.ctime = discoveryTimer;
@@ -421,6 +437,8 @@ Page {
         Mydb.loadSettings()
         covidStartDate != "" ? koronaStart.text = new Date(covidStartDate).toLocaleDateString(Qt.locale(),Locale.ShortFormat) : koronaStart.text = qsTr("Start date")
         covidEndDate != "" ? koronaEnd.text = new Date(covidEndDate).toLocaleDateString(Qt.locale(),Locale.ShortFormat) : koronaEnd.text = qsTr("End date")
-        koronaScan.setDiscoverable();
+        if (developer){console.log(koronaScan.btVisible, koronaScan.setDiscoverable())}
+        if (serverAddress == "" || !koronaScan.setDiscoverable() || !koronaScan.getName()){delay.start()}
+        else {discoveryRunning = true}
     }
 }

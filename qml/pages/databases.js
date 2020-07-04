@@ -35,6 +35,10 @@ function saveSettings(_visibility) {
                     rs = tx.executeSql('SELECT * FROM Settings WHERE name = ?', 'coronaExposureSince');
                     if (rs.rows.length > 0) {tx.executeSql('UPDATE Settings SET valint=? WHERE name=?', [ coronaExposureSince, 'coronaExposureSince'])}
                     else {tx.executeSql('INSERT INTO Settings VALUES(?, ?, ?, ?, ?)', [ 'coronaExposureSince', '', '', '' , coronaExposureSince])}
+                    /*// discoveryRunning
+                    rs = tx.executeSql('SELECT * FROM Settings WHERE name = ?', 'discoveryRunning');
+                    if (rs.rows.length > 0) {tx.executeSql('UPDATE Settings SET valint=? WHERE name=?', [ discoveryRunning, 'discoveryRunning'])}
+                    else {tx.executeSql('INSERT INTO Settings VALUES(?, ?, ?, ?, ?)', [ 'discoveryRunning', '', '', '' , discoveryRunning])}*/
 
 
                     //VISIBILITY settings
@@ -101,6 +105,10 @@ function loadSettings() {
                     rs = tx.executeSql('SELECT * FROM Settings WHERE name = ?', ['coronaExposureSince']);
                     if (rs.rows.length > 0) {coronaExposureSince = rs.rows.item(0).valint}
                     else {}
+                    /*// discoveryRunning
+                    rs = tx.executeSql('SELECT * FROM Settings WHERE name = ?', ['discoveryRunning']);
+                    if (rs.rows.length > 0) {discoveryRunning = rs.rows.item(0).valint}
+                    else {}*/
                     //VISIBILITY settings
                     // closeText.visible
                     rs = tx.executeSql('SELECT * FROM Settings WHERE name = ?', ['visi_closeText']);
@@ -135,7 +143,7 @@ function addHits(_devicepair, _day) {
                     // Check if the device is already in the database
                     var rs = tx.executeSql('SELECT * FROM Exposures WHERE devicepair = ? AND day = ?', [_devicepair, _day]);
                     // If multiple devices during day, something went wrong
-                    if (rs.rows.length > 1){console.log("error 1")}
+                    if (rs.rows.length > 1){if (developer) {console.log("error 1")}}
                     // Increase hits by 1
                     else if (rs.rows.length > 0) {
                         tx.executeSql('UPDATE Exposures SET hits=? WHERE devicepair = ? AND day = ?', [rs.rows.item(0).hits + 1, _devicepair, _day])}
@@ -159,7 +167,7 @@ function findHits(_day) {
                     // Check count of the devices in db
                     var rs = tx.executeSql('SELECT count(devicepair) AS cdevicepair FROM Exposures WHERE day = ?', [_day]);
                     // If multiple results, something went wrong
-                    if (rs.rows.length > 1){console.log("error 1")}
+                    if (rs.rows.length > 1){if (developer) {console.log("error 1")}}
                     // Set new result to the list model
                     else if (rs.rows.length > 0) {
                         koronaList.set(0,{"devices": rs.rows.item(0).cdevicepair})
@@ -171,7 +179,7 @@ function findHits(_day) {
                     // Check devices with more than minHits hits
                     rs = tx.executeSql('SELECT count(devicepair) AS cdevicepair FROM Exposures WHERE day = ? AND hits > ?', [_day, minHits]);
                     // If multiple results, something went wrong
-                    if (rs.rows.length > 1){console.log("error 1")}
+                    if (rs.rows.length > 1 && developer){console.log("error 1")}
                     // Set new result to the list model
                     else if (rs.rows.length > 0) {
                         koronaList.set(0,{"exposures": rs.rows.item(0).cdevicepair})
@@ -221,11 +229,13 @@ function checkMyExposures() {
                     tx.executeSql('CREATE TABLE IF NOT EXISTS Exposures(devicepair TEXT, day TEXT, hits INTEGER)');
 
                     var rs = tx.executeSql('SELECT devicepair FROM Exposures WHERE hits > ?', [minHits]);
+                    if (developer){console.log("Exposures with hits", rs.rows.length)}
                     var _exposurelist = '00:1' + ':' + version.substring(0,1) + version.substring(2,3) + version.substring(4,5) +':00:00:00'
-                    for (var i = 1; i<rs.rows.length;i++){
+                    for (var i = 0; i<rs.rows.length;i++){
 
                         _exposurelist = _exposurelist +  rs.rows.item(i).devicepair
                     }
+                    if (developer){console.log(_exposurelist)}
                     koronaClient.expdata = _exposurelist;
                     return "KoronaTest"
                 }
@@ -245,9 +255,8 @@ function readMyKorona() {
                     var le // Lower end day + 1
                     var hs
                     var he
-                    //console.log(((new Date()-new Date(covidEndDate))/24/3600/1000))
                     if (((new Date()-new Date(covidEndDate))/24/3600/1000)>25) {
-                        //console.log("No data to be sent")
+                        if (developer) {console.log("No data to be sent")}
                     }
                     else if (((new Date()-new Date(covidStartDate))/24/3600/1000)>25){
                         if (new Date().getDate()>25){
@@ -261,7 +270,7 @@ function readMyKorona() {
                         }
 
                         he = new Date(covidEndDate).getDate()
-                        //console.log("Only enddata affecting", ls, le, hs, he)
+                        if (developer) {console.log("Only enddata affecting", ls, le, hs, he)}
                     }
                     else if(new Date(covidStartDate).getMonth() != new Date(covidEndDate).getMonth()){
                         ls = new Date(covidStartDate).getDate()
@@ -275,16 +284,16 @@ function readMyKorona() {
                     }
 
 
-                    var rs = tx.executeSql('SELECT devicepair FROM Exposures WHERE hits > ? AND substr(devicepair,3,1) = ?', [minHits, ':']);
+                    var rs = tx.executeSql('SELECT devicepair FROM Exposures WHERE hits > ?', [minHits]);
                     var _koronalist = '00:0' + ':' + version.substring(0,1)  + version.substring(2,3) + version.substring(4,5) +':00:00:00'
                     var moved = ''
-                    for (var i = 1; i<rs.rows.length;i++){
+                    for (var i = 0; i<rs.rows.length;i++){
                         var _poll = Number(rs.rows.item(i).devicepair.substring(0,2))
                         if (_poll >= ls && _poll <= le || _poll >= hs && _poll <= he){
                             _koronalist = _koronalist +  rs.rows.item(i).devicepair
                         }
                     }
-
+                    if (developer){console.log(_koronalist)}
                     koronaClient.expdata = _koronalist;
                     return "MyKoronaData"
                 }
@@ -305,9 +314,8 @@ function removeMyKorona() {
                     var le // Lower end day + 1
                     var hs
                     var he
-                    //console.log(((new Date()-new Date(covidEndDate))/24/3600/1000))
                     if (((new Date()-new Date(covidEndDate))/24/3600/1000)>25) {
-                        //console.log("No data to be sent")
+                        if (developer) {console.log("No data to be sent")}
                     }
                     else if (((new Date()-new Date(covidStartDate))/24/3600/1000)>25){
                         if (new Date().getDate()>25){
@@ -321,7 +329,7 @@ function removeMyKorona() {
                         }
 
                         he = new Date(covidEndDate).getDate()
-                        //console.log("Only enddata affecting", ls, le, hs, he)
+                        if (developer) {console.log("Only enddata affecting", ls, le, hs, he)}
                     }
                     else if(new Date(covidStartDate).getMonth() != new Date(covidEndDate).getMonth()){
                         ls = new Date(covidStartDate).getDate()
@@ -336,15 +344,36 @@ function removeMyKorona() {
 
 
                     var rs = tx.executeSql('SELECT devicepair FROM Exposures WHERE hits > ? AND substr(devicepair,3,1) = ?', [minHits, ':']);
-                    for (var i = 1; i<rs.rows.length;i++){
+                    for (var i = 0; i<rs.rows.length;i++){
                         var _poll = Number(rs.rows.item(i).devicepair.substring(0,2))
                         if (_poll >= ls && _poll <= le || _poll >= hs && _poll <= he){
-                            //console.log(rs.rows.item(i).devicepair)
                             tx.executeSql('DELETE FROM Exposures WHERE devicepair = ?', [rs.rows.item(i).devicepair]);
                         }
                     }
 
                     return "DeletedSentData"
+                }
+                )
+}
+
+// Function shows saved data, meant for developing only
+function showData() {
+
+    var db = LocalStorage.openDatabaseSync("KoronakoDB", "1.0", "Koronako database", 1000000);
+
+    db.transaction(
+                function(tx) {
+                    // Create the table, if not existing
+                    tx.executeSql('CREATE TABLE IF NOT EXISTS Exposures(devicepair TEXT, day TEXT, hits INTEGER)');
+                    var _text='Devicepair Day Hits \n'
+                    // Check if the device is already in the database
+                    var rs = tx.executeSql('SELECT * FROM Exposures');
+                    // If multiple devices during day, something went wrong
+                    for (var i = 0; i<rs.rows.length;i++){
+                        _text = _text + rs.rows.item(i).devicepair + " " + rs.rows.item(i).day + " " + rs.rows.item(i).hits + "\n"
+                    }
+                    if (developer) {console.log(_text)}
+                    data.text = _text
                 }
                 )
 }

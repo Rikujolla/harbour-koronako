@@ -33,14 +33,6 @@ Page {
     SilicaFlickable {
         anchors.fill: parent
 
-        /*PullDownMenu {
-
-            MenuItem {
-                text: qsTr("Back to settings")
-                onClicked: pageStack.pop()
-            }
-        }*/
-
         contentHeight: column.height
 
         Column {
@@ -101,9 +93,9 @@ Page {
                     margins: Theme.paddingLarge
                 }
                 text: {
-                    qsTr("The basic idea to maintain your and others privacy is a symmetric bluetooth address mix of the devices.")
-                            + qsTr(" Because only part of the address is used false alarms are possible occasionally.")
-                            +"\n" + qsTr("Only mixed bluetooth address and a month day number is saved to the database preventing data hacking later.")
+                    qsTr("The basic idea to maintain your and others privacy is a symmetric device name mix of the devices.")
+                            + qsTr(" Because only part of the device name is used false alarms are possible occasionally.")
+                            +"\n" + qsTr("Only mixed device names and a month day number is saved to the database preventing data hacking later.")
                             + qsTr(" Nor more than one month data can be saved.")
                             +"\n" + qsTr("Paired devices are not saved to database. The major privacy concern is the requirement to have bluetooth on revealing your device to others.")
                 }
@@ -138,6 +130,7 @@ Page {
                 }
                 text: {
                     qsTr("App icon (Riku Lahtinen)")
+                    + "\n" + qsTr("Android device list from wikipedia.")
                 }
             }
 

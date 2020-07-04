@@ -28,6 +28,7 @@ import Sailfish.Silica 1.0
 import QtQuick.LocalStorage 2.0
 import "./databases.js" as Mydb
 import harbour.koronako.koronaclient 1.0
+import harbour.koronako.koronascan 1.0
 
 
 Page {
@@ -36,13 +37,6 @@ Page {
     SilicaFlickable {
         anchors.fill: parent
 
-        /*PullDownMenu {
-
-            MenuItem {
-                text: qsTr("Back to settings")
-                onClicked: pageStack.pop()
-            }
-        }*/
 
         contentHeight: column.height
 
@@ -53,6 +47,43 @@ Page {
             spacing: Theme.paddingLarge
             PageHeader {
                 title: qsTr("Settings page")
+            }
+
+            Text {
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.primaryColor
+                wrapMode: Text.WordWrap
+                width: parent.width
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    margins: Theme.paddingLarge
+                }
+                text: {
+                    qsTr("If you end to this page when starting the app, check the settings are OK.")
+                }
+            }
+
+            SectionHeader {
+                id: btVisibility
+                visible: false
+                text: qsTr("Check bluetooth visibility")
+            }
+            Text {
+                id: btVisibilityText
+                visible: false
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.primaryColor
+                wrapMode: Text.WordWrap
+                width: parent.width
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    margins: Theme.paddingLarge
+                }
+                text: {
+                    qsTr("Set bluetooth on and visible from the phone settings. Restart the app.")
+                }
             }
 
             SectionHeader { text: qsTr("Server settings") }
@@ -70,7 +101,6 @@ Page {
                     qsTr("Insert here address info of your koronako-server")
                 }
             }
-
 
             Row {
                 TextField {
@@ -140,9 +170,16 @@ Page {
                     Mydb.saveSettings(0);
                 }
             }
-/*
-            SectionHeader { text: qsTr("Other settings") }
+
+            SectionHeader {
+                id : phoneNameValidity
+                visible: false
+                text: qsTr("Phone name is not valid")
+            }
+
             Text {
+                id: phoneNameValidityText
+                visible: false
                 font.pixelSize: Theme.fontSizeSmall
                 color: Theme.primaryColor
                 wrapMode: Text.WordWrap
@@ -153,16 +190,38 @@ Page {
                     margins: Theme.paddingLarge
                 }
                 text: {
-                    qsTr("Timer settings etc")
+                    qsTr("The phone name is '%1'. The app will utilize last seven characters of the phone name. If the phone name is too short or too general, the app will not work. If you see this text, change the name from the device settings.").arg(koronaScan.ownDevice)
                 }
             }
-*/
+
             Koronaclient {
                 id: koronaClient
                 onKorodataChanged:  {}
             }
 
+            Koronascan {
+                id: koronaScan
+            }
+        }
+    }
 
+    Component.onCompleted: {
+        if (koronaScan.setDiscoverable()) {
+            if (!koronaScan.getName()) {
+                phoneNameValidity.visible = true
+                phoneNameValidityText.visible = true
+                if (developer){console.log ("The nametest did not succeed")}
+            }
+            else {
+                phoneNameValidity.visible = false
+                phoneNameValidityText.visible = false
+                if (developer){console.log ("The nametest succeeded")}
+            }
+        }
+        else {
+            btVisibility.visible = true
+            btVisibilityText.visible = true
+            if (developer){console.log ("Bluetooth is off or not discoverable, nametest was not done")}
         }
     }
 }

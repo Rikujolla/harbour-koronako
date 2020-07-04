@@ -29,18 +29,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The basic idea to maintain your and others privacy is a symmetric bluetooth address mix of the devices.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> Because only part of the address is used false alarms are possible occasionally.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Only mixed bluetooth address and a month day number is saved to the database preventing data hacking later.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source> Nor more than one month data can be saved.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -74,6 +62,22 @@
     </message>
     <message>
         <source>Licensed under BSD. License, source code and more information:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The basic idea to maintain your and others privacy is a symmetric device name mix of the devices.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> Because only part of the device name is used false alarms are possible occasionally.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Only mixed device names and a month day number is saved to the database preventing data hacking later.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Android device list from wikipedia.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -187,6 +191,14 @@
         <source>Data sent status: </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Show data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not known</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Settings</name>
@@ -212,6 +224,37 @@
     </message>
     <message>
         <source>Use common server</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If you end to this page when starting the app, check the settings are OK.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check bluetooth visibility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phone name is not valid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The phone name is &apos;%1&apos;. The app will utilize last seven characters of the phone name. If the phone name is too short or too general, the app will not work. If you see this text, change the name from the device settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set bluetooth on and visible from the phone settings. Restart the app.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ShowData</name>
+    <message>
+        <source>Data page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Data</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
