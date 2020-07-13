@@ -55,22 +55,14 @@
 Device::Device(QObject *parent)
     :   QObject(parent), localDevice(new QBluetoothLocalDevice)
 {
-    // devicename can be changed devel-su hciconfig hci0 name newname
     discoveryAgent = new QBluetoothDeviceDiscoveryAgent();
 
-    //connect(discoveryAgent, SIGNAL(deviceDiscovered(QBluetoothDeviceInfo)),
-    //        this, SLOT(addDevice(QBluetoothDeviceInfo)));
     connect(discoveryAgent, SIGNAL(finished()), this, SLOT(scanFinished()));
 
     connect(localDevice, SIGNAL(hostModeStateChanged(QBluetoothLocalDevice::HostMode)),
             this, SLOT(hostModeStateChanged(QBluetoothLocalDevice::HostMode)));
 
     hostModeStateChanged(localDevice->hostMode());
-
-    //timer.connect(&timer, SIGNAL(timeout()), this, SLOT(startScan()));
-    //timer.setSingleShot(false);
-    //timer.start(dTimer);
-
 }
 
 Device::~Device()
@@ -155,11 +147,12 @@ bool Device::getName()
         qDebug() << "Phone name length and generality is ok" << myOwnDevice;
         return true;
     }
-
 }
 
 void Device::hostModeStateChanged(QBluetoothLocalDevice::HostMode mode)
 {
+    // The feature is not utilized in the app yet
+    qDebug() << "Host mode" << mode;
 }
 
 bool Device::isInList(QString _phone)

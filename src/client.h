@@ -64,7 +64,7 @@ class Client : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString sipadd READ sipadd WRITE setSipadd NOTIFY sipaddChanged) //Server address
-    Q_PROPERTY(int sport READ sport WRITE setSport NOTIFY sportChanged) // Server port
+    Q_PROPERTY(quint16 sport READ sport WRITE setSport NOTIFY sportChanged) // Server port
     Q_PROPERTY(QString korodata READ korodata WRITE setKorodata NOTIFY korodataChanged) //opponents move
     Q_PROPERTY(int msg READ msg WRITE setMsg NOTIFY msgChanged) // For messages
     Q_PROPERTY(int msg2 READ msg2 WRITE setMsg2 NOTIFY msg2Changed) // For messages
@@ -78,8 +78,8 @@ public:
       mySipadd = tee1;
       sipaddChanged(mySipadd);
     }
-    int sport(){return mySport;}
-    void setSport(int tee2){
+    quint16 sport(){return mySport;}
+    void setSport(quint16 tee2){
       mySport = tee2;
       sportChanged(mySport);
     }
@@ -104,30 +104,23 @@ public:
       expdataChanged(myExpdata);
     }
     Q_INVOKABLE void exchangeDataWithServer(QString toTcp);
-    Q_INVOKABLE void startClient();
+    //Q_INVOKABLE void startClient();
     QString getExposures();
 
 signals:
     void sipaddChanged(QString tee1);
-    void sportChanged(int tee2);
+    void sportChanged(quint16 tee2);
     void korodataChanged(QString tee3);
     void msgChanged(int tee4);
     void msg2Changed(int tee5);
     void expdataChanged(QString tee6);
 
-private slots:
-    //void requestNewFortune();
-    void readFortune();
-    void displayError(QAbstractSocket::SocketError socketError);
-    void sessionOpened();
-
 private:
     QSslSocket *tcpSocket;
     QDataStream in;
     QString currentFortune;
-    QNetworkSession *networkSession;
     QString mySipadd;
-    int mySport;
+    quint16 mySport;
     QString myKorodata;
     int myMsg;
     int myMsg2;

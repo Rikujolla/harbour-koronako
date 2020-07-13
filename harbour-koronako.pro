@@ -14,7 +14,7 @@ TARGET = harbour-koronako
 
 CONFIG += sailfishapp
 # Uncomment next line for release
-DEFINES += QT_NO_DEBUG_OUTPUT
+#DEFINES += QT_NO_DEBUG_OUTPUT
 
 QT += bluetooth
 

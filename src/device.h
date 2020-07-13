@@ -44,7 +44,7 @@
 #ifndef DEVICE_H
 #define DEVICE_H
 
-#include <qbluetoothglobal.h> //Not needed??
+#include <qbluetoothglobal.h>
 #include <qbluetoothlocaldevice.h>
 #include <QObject>
 #include <QVariant>

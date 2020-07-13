@@ -11,6 +11,9 @@
 
 # * date Author's Name <author's email> version-release
 # - Summary of changes
+* Tue Jul 14 2020 Riku Lahtinen <rikul.lajolla@kiu.as> 0.1.3-1
+- Code cleaning, version not published as rpm
+
 * Sat Jul 11 2020 Riku Lahtinen <rikul.lajolla@kiu.as> 0.1.2-1
 - Bluetooth name used instead of address due to Android limitation
 - Plenty of coding changes

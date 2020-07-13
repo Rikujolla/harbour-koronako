@@ -343,7 +343,7 @@ function removeMyKorona() {
                     }
 
 
-                    var rs = tx.executeSql('SELECT devicepair FROM Exposures WHERE hits > ? AND substr(devicepair,3,1) = ?', [minHits, ':']);
+                    var rs = tx.executeSql('SELECT devicepair FROM Exposures WHERE hits > ?', [minHits]);
                     for (var i = 0; i<rs.rows.length;i++){
                         var _poll = Number(rs.rows.item(i).devicepair.substring(0,2))
                         if (_poll >= ls && _poll <= le || _poll >= hs && _poll <= he){
